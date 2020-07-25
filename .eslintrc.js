@@ -6,6 +6,8 @@ module.exports = {
         sourceType: 'module', // Allows for the use of imports
     },
     extends: [
+        'eslint:recommended',
+
         // Adds recommended jest rules
         'plugin:jest/recommended',
 
@@ -21,4 +23,8 @@ module.exports = {
         // the last configuration in the extends array.
         'plugin:prettier/recommended',
     ],
+    rules: {
+        // disable the rule for all files
+        '@typescript-eslint/explicit-function-return-type': 'error',
+    },
 };
