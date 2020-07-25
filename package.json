@@ -9,7 +9,7 @@
         "test": "jest",
         "watch": "jest --watch"
     },
-  "author": "Rob McGuire <robert.mcgui@gmail.com>",
+    "author": "Rob McGuire <robert.mcgui@gmail.com>",
     "license": "MIT",
     "dependencies": {
         "@babel/core": "^7.10.5",
