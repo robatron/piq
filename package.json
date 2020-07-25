@@ -6,7 +6,8 @@
     "scripts": {
         "format": "eslint '*/**/*.{js,ts}' --fix",
         "lint": "eslint '*/**/*.{js,ts}'",
-        "test": "jest"
+        "test": "jest",
+        "watch": "jest --watch"
     },
   "author": "Rob McGuire <robert.mcgui@gmail.com>",
     "license": "MIT",

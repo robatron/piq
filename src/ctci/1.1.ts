@@ -3,6 +3,23 @@
  * characters. What if you cannot use additional structures?
  */
 
-const sayHello = (name) => `Hello, ${name}`;
+export const hasAllUniqueChars = (str: string): boolean => {
+    const charMap = {};
+    for (let i = 0; i < str.length; ++i) {
+        const char = str[i];
+        if (!charMap[char]) {
+            charMap[char] = true;
+        } else {
+            return false;
+        }
+    }
+    return true;
+};
 
-export default sayHello;
+// WIP: Alternate version that does not use any additional data structures
+export const hasAllUniqueCharsAlt = (str: string): boolean => {
+    for (let i = 0; i < str.length; ++i) {
+        const char = str[i];
+    }
+    return true;
+};
