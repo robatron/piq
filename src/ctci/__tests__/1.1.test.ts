@@ -1,20 +1,27 @@
-import onePointOne from '../1.1';
+import _1_1 from '../1.1';
 
 const testStrAllUnique = 'abcdefghijklmnopqrstuvwxyz';
-const testStrNotUniqueBeg = 'aabcdefghijklmnopqrstuvwxyz';
-const testStrNotUniqueMid = 'abcdefghijklmnoopqrstuvwxyz';
-const testStrNotUniqueEnd = 'abcdefghijklmnopqrstuvwxyzz';
+const testStrNotUnique = [
+    // Duplicate in beginning of string
+    'aabcdefghijklmnopqrstuvwxyz',
+
+    // ... in the middle
+    'abcdefghijklmnoopqrstuvwxyz',
+
+    // At the end
+    'abcdefghijklmnopqrstuvwxyzz',
+];
 
 ['hasAllUniqueChars', 'hasAllUniqueCharsAlt'].forEach((fnName) => {
     describe(fnName, () => {
         it('returns true if a string has all unique characters', () => {
-            expect(onePointOne[fnName](testStrAllUnique)).toBe(true);
+            expect(_1_1[fnName](testStrAllUnique)).toBe(true);
         });
 
         it('returns false if a string does not have all unique characters', () => {
-            expect(onePointOne[fnName](testStrNotUniqueBeg)).toBe(false);
-            expect(onePointOne[fnName](testStrNotUniqueMid)).toBe(false);
-            expect(onePointOne[fnName](testStrNotUniqueEnd)).toBe(false);
+            testStrNotUnique.forEach((str) => {
+                expect(_1_1[fnName](str)).toBe(false);
+            });
         });
     });
 });
