@@ -17,7 +17,7 @@ export const hasAllUniqueChars = (str: string): boolean => {
 };
 
 // Alternate version that does not use any additional data structures
-export const hasAllUniqueCharsAlt = (str: string): boolean => {
+export const hasAllUniqueCharsAlt = (str: string): void => {
     for (let i = 0; i < str.length; ++i) {
         const char = str[i];
 
