@@ -1,7 +1,9 @@
 import onePointOne from '../1.1';
 
-const testStrAllUnique = 'abc';
-const testStrNotUnique = 'abbc';
+const testStrAllUnique = 'abcdefghijklmnopqrstuvwxyz';
+const testStrNotUniqueBeg = 'aabcdefghijklmnopqrstuvwxyz';
+const testStrNotUniqueMid = 'abcdefghijklmnoopqrstuvwxyz';
+const testStrNotUniqueEnd = 'abcdefghijklmnopqrstuvwxyzz';
 
 ['hasAllUniqueChars', 'hasAllUniqueCharsAlt'].forEach((fnName) => {
     describe(fnName, () => {
@@ -10,7 +12,9 @@ const testStrNotUnique = 'abbc';
         });
 
         it('returns false if a string does not have all unique characters', () => {
-            expect(onePointOne[fnName](testStrNotUnique)).toBe(false);
+            expect(onePointOne[fnName](testStrNotUniqueBeg)).toBe(false);
+            expect(onePointOne[fnName](testStrNotUniqueMid)).toBe(false);
+            expect(onePointOne[fnName](testStrNotUniqueEnd)).toBe(false);
         });
     });
 });
