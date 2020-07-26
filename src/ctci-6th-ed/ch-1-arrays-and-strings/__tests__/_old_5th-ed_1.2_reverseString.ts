@@ -1,4 +1,4 @@
-import { reverseArrayString } from '../1.2';
+import { reverseArrayString } from '../_old_5th-ed_1.2_reverseString';
 
 describe('reverseArrayString', () => {
     it('reverses an array string in-place', () => {
