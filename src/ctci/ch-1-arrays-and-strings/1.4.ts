@@ -9,28 +9,35 @@
  *  Input:  "Mr John Smith    "
  *  Output: "Mr%20John%20Smith"
  *
- * Modification: Perform operation in-place to align with spirit of problem.
+ * Modification: Perform operation in-place on an array representing the string
+ * to align with the spirit of problem.
  */
 
 export const replaceSpace = (strArray: string[]): void => {
-    // Charcter to replace
+    // Charcter to replace (space)
     const targetChar = ' ';
 
     // String to replace character with
     const replaceStr = '%20';
 
-    // Capture the "true" length of the string before modification
-    const strArrayLenSnapshot: number = strArray.length;
-
-    for (let i = 0; i < strArrayLenSnapshot; ++i) {
+    // Loop through the characters in stringArray...
+    for (let i = 0; i < strArray.length; ++i) {
         const char: string = strArray[i];
+
+        // If we encounter the target character, shift all characters after it
+        // to the right to make space for the replacement string, starting from
+        // the end, then insert the replacement string
         if (char === targetChar) {
             const addCharCount: number = replaceStr.length - targetChar.length;
             for (let ii = 0; ii < addCharCount; ++ii) {
-                // Add space for the replacement string at the end
-                strArray.push(null);
+                for (let iii = strArray.length - 1; iii > i; --iii) {
+                    // This expands array by `addCharCount` elements
+                    strArray[iii + 1] = strArray[iii];
+                }
+            }
 
-                // Shift all characters after the target char to the right
+            for (let ii = 0; ii < replaceStr.length; ++ii) {
+                strArray[i + ii] = replaceStr[ii];
             }
         }
     }
