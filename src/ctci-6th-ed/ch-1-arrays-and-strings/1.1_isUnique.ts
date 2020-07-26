@@ -1,9 +1,11 @@
 /**
- * 1.1) Implement an algorithm to determine if a string has all unique
- * characters. What if you cannot use additional structures?
+ * 1.1 - Is Unique
+ *
+ * Implement an algorithm to determine if a string has all unique
+ * characters. What if you cannot use additional data structures?
  */
 
-export const hasAllUniqueChars = (str: string): boolean => {
+export const isUnique = (str: string): boolean => {
     const charMap = {};
     for (let i = 0; i < str.length; ++i) {
         const char = str[i];
@@ -17,7 +19,7 @@ export const hasAllUniqueChars = (str: string): boolean => {
 };
 
 // Alternate version that does not use any additional data structures
-export const hasAllUniqueCharsAlt = (str: string): boolean => {
+export const isUniqueAlt = (str: string): boolean => {
     for (let i = 0; i < str.length; ++i) {
         const char = str[i];
 
@@ -35,6 +37,6 @@ export const hasAllUniqueCharsAlt = (str: string): boolean => {
 };
 
 export default {
-    hasAllUniqueChars,
-    hasAllUniqueCharsAlt,
+    isUnique,
+    isUniqueAlt,
 };

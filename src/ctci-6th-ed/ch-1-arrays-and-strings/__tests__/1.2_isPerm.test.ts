@@ -1,4 +1,4 @@
-import { isPerm } from '../1.3';
+import { isPerm } from '../1.2_isPerm';
 
 const anagram1 = 'anagram';
 const anagram2 = 'nagaram';

@@ -1,4 +1,4 @@
-import _1_1 from '../1.1';
+import _1_1 from '../1.1_isUnique';
 
 const testStrAllUnique = 'abcdefghijklmnopqrstuvwxyz';
 const testStrNotUnique = [
@@ -12,7 +12,7 @@ const testStrNotUnique = [
     'abcdefghijklmnopqrstuvwxyzz',
 ];
 
-['hasAllUniqueChars', 'hasAllUniqueCharsAlt'].forEach((fnName) => {
+['isUnique', 'isUniqueAlt'].forEach((fnName) => {
     describe(fnName, () => {
         it('returns true if a string has all unique characters', () => {
             expect(_1_1[fnName](testStrAllUnique)).toBe(true);
