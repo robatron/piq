@@ -17,5 +17,5 @@ Programming problems and solutions are broken down into several sections:
 
 -   [Cracking the Coding Interview, 6th Ed., by Gayle Laakmann-McDowell (PDF)](https://github.com/alxerg/Books-1/blob/master/Cracking%20the%20Coding%20Interview%2C%206th%20Edition%20189%20Programming%20Questions%20and%20Solutions.pdf)
     -   [Solutions implemented in JavaScript](https://github.com/careercup/CtCI-6th-Edition-JavaScript)
-    -   [Solutions implemented in TypeScript](https://github.com/Dante-101/ctci-6th-edition-typescript)
+    -   [Solutions implemented in TypeScript (WIP)](https://github.com/Dante-101/ctci-6th-edition-typescript)
 -   [Using ESLint and Prettier in a TypeScript Project](https://www.robertcooper.me/using-eslint-and-prettier-in-a-typescript-project)
