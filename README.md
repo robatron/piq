@@ -2,13 +2,9 @@
 
 My personal selection of software engineering interview questions and solutions for using in, and practicing for, software engineering interviews.
 
-All solutions are written in TypeScript mainly because I think the tooling, especially the test tooling, is excellent, and allow for rapid development and iteration.
+All solutions are written in TypeScript and intentionally ignore language features to make the solutions more "C-like" to fit with the spirit of the questions. (E.g., not using `Array.prototype.reverse()` when asked to reverse an array.) I chose TypeScript because I can use most of the JavaScript dev tooling, (which I think is excellent, especially the test tooling,) and adds typing which JS sorely needs.
 
-There will likely be multiple solutions for each question; These solutions are just what I came up with.
-
-## Collections
-
-Programming problems are broken down into several sections.
+Programming problems and solutions are broken down into several sections:
 
 -   `src/ctci-6th-ed/`: Problems from [_Cracking the Coding Interview, 6th Edition_](https://smile.amazon.com/Cracking-Coding-Interview-Programming-Questions/dp/0984782850/) book by Gayle Laakmann McDowell
 -   (More coming)
