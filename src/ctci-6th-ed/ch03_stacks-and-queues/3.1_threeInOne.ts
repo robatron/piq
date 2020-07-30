@@ -24,16 +24,6 @@ const getCursorMax = (cursors: CursorMap): number => {
     }, 0);
 };
 
-// Get a a cursor for the stack. If it doesn't exist, insert it first
-const getCursor = (stackName: string, cursors: CursorMap): number => {
-    if (cursors[stackName]) {
-        return cursors[stackName];
-    }
-    const cursorMax = getCursorMax(cursors);
-    cursors[stackName] = cursorMax;
-    return cursorMax;
-};
-
 // Increment or decrement cursors above the cursor
 const crementCursorsAbove = (
     direction: Direction,
@@ -56,11 +46,18 @@ export default class multiStack {
     cursors: CursorMap = {};
 
     // Single array contains all elements of all stacks
-    stack: number[] = [];
+    stacks: number[] = [];
 
     push(stackName: string, item: any): void {
         // Get the current cursor
-        let cursor = getCursor(stackName, this.cursors);
+        let cursor = this.cursors[stackName];
+
+        // If the cursor is undefined, create a new one
+        if (cursor === undefined) {
+            const cursorMax = getCursorMax(this.cursors);
+            this.cursors[stackName] = cursorMax;
+            cursor = cursorMax;
+        }
 
         // Update any cursors above the current one
         crementCursorsAbove(Direction.up, this.cursors, cursor);
@@ -71,18 +68,20 @@ export default class multiStack {
         }
 
         // Insert item non-destructively
-        this.stack.splice(cursor, 0, item);
+        this.stacks.splice(cursor, 0, item);
     }
 
     pop(stackName: string): any {
         // Return immediately if stack is empty
+        // TODO: Fix this; It's not working. Getting negative indexes. Related?
         // if (this.isEmpty(stackName)) {
+        //     console.log('>>>', stackName, this.cursors, this.stack);
         //     return;
         // }
 
         // Get the current cursor and the item
-        const cursor = getCursor(stackName, this.cursors);
-        const item = this.stack[cursor];
+        const cursor = this.cursors[stackName];
+        const item = this.stacks[cursor];
 
         // Update any cursors above the current one
         crementCursorsAbove(Direction.down, this.cursors, cursor);
@@ -95,20 +94,20 @@ export default class multiStack {
         }
 
         // Remove the item destructively
-        this.stack.splice(cursor, 1);
+        this.stacks.splice(cursor, 1);
 
         // Return the item captured earlier
         return item;
     }
 
     peek(stackName: string): any {
-        const cursor = getCursor(stackName, this.cursors);
-        return this.stack[cursor];
+        const cursor = this.cursors[stackName];
+        return this.stacks[cursor];
     }
 
     // Return if the specified stack is empty or not
     isEmpty(stackName: string): boolean {
-        const cursor = getCursor(stackName, this.cursors);
-        return this.stack[cursor] === undefined;
+        const cursor = this.cursors[stackName];
+        return this.stacks[cursor] === undefined;
     }
 }
