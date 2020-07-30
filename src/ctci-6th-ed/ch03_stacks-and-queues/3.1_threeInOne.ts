@@ -2,7 +2,14 @@
  * 3.1 - Three in One
  *
  * Describe how you could use a single array to implement three stacks.
+ *
+ * Modification: Store `n` stacks in a single, dynamically-resizing array.
  */
+
+enum Direction {
+    up,
+    down,
+}
 
 interface CursorMap {
     [index: string]: number;
@@ -27,11 +34,19 @@ const getCursor = (stackName: string, cursors: CursorMap): number => {
     return cursorMax;
 };
 
-// Increment cursors above the cursor
-const incrCursorsAbove = (cursors: CursorMap, cursor: number): void => {
+// Increment or decrement cursors above the cursor
+const crementCursorsAbove = (
+    direction: Direction,
+    cursors: CursorMap,
+    cursor: number,
+): void => {
     Object.keys(cursors).forEach((cursorKey) => {
         if (cursors[cursorKey] > cursor) {
-            ++cursors[cursorKey];
+            if (direction === Direction.up) {
+                ++cursors[cursorKey];
+            } else if ((direction = Direction.down)) {
+                --cursors[cursorKey];
+            }
         }
     });
 };
@@ -48,7 +63,7 @@ export default class multiStack {
         let cursor = getCursor(stackName, this.cursors);
 
         // Update any cursors above the current one
-        incrCursorsAbove(this.cursors, cursor);
+        crementCursorsAbove(Direction.up, this.cursors, cursor);
 
         // If the stack is not empty, also increment this cursor
         if (!this.isEmpty(stackName)) {
@@ -59,13 +74,35 @@ export default class multiStack {
         this.stack.splice(cursor, 0, item);
     }
 
-    pop(): any {
-        return null;
+    pop(stackName: string): any {
+        // Return immediately if stack is empty
+        // if (this.isEmpty(stackName)) {
+        //     return;
+        // }
+
+        // Get the current cursor and the item
+        const cursor = getCursor(stackName, this.cursors);
+        const item = this.stack[cursor];
+
+        // Update any cursors above the current one
+        crementCursorsAbove(Direction.down, this.cursors, cursor);
+
+        // If the stack is empty, remove its cursor. Otherwise, just decrement.
+        if (this.isEmpty(stackName)) {
+            delete this.cursors[stackName];
+        } else {
+            --this.cursors[stackName];
+        }
+
+        // Remove the item destructively
+        this.stack.splice(cursor, 1);
+
+        // Return the item captured earlier
+        return item;
     }
 
     peek(stackName: string): any {
         const cursor = getCursor(stackName, this.cursors);
-        console.log('>>>', this.stack, cursor);
         return this.stack[cursor];
     }
 
