@@ -73,11 +73,9 @@ export default class multiStack {
 
     pop(stackName: string): any {
         // Return immediately if stack is empty
-        // TODO: Fix this; It's not working. Getting negative indexes. Related?
-        // if (this.isEmpty(stackName)) {
-        //     console.log('>>>', stackName, this.cursors, this.stack);
-        //     return;
-        // }
+        if (this.isEmpty(stackName)) {
+            return;
+        }
 
         // Get the current cursor and the item
         const cursor = this.cursors[stackName];
@@ -87,7 +85,7 @@ export default class multiStack {
         crementCursorsAbove(Direction.down, this.cursors, cursor);
 
         // If the stack is empty, remove its cursor. Otherwise, just decrement.
-        if (this.isEmpty(stackName)) {
+        if (this.cursors[stackName] === 0) {
             delete this.cursors[stackName];
         } else {
             --this.cursors[stackName];
