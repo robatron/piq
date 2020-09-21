@@ -24,22 +24,46 @@ import BinTreeNode from './BinTreeNode';
  *                 └── 2nd-cousin-twice-removed
  */
 export const getBinTreeDisplayLines = (
-    binTree: BinTreeNode,
+    binTreeRoot: BinTreeNode,
 ): (number | string)[] => {
-    const oneling = '└─';
-    const twoling = '├─';
-    const spacer = '│';
+    // Line prefixes
+    const singling = '└── ';
+    const multiling = '├── ';
+    const levelPrefix = '│    ';
 
-    const lines = [];
+    // Lines to return
+    const lines: (number | string)[] = [];
 
-    let level = 0;
-    let value = binTree.value;
-    let leftValue = binTree.leftNode.value;
-    let rightValue = binTree.rightNode.value;
+    // Stack of nodes to search (DFS, pre-order)
+    const searchStack: BinTreeNode[] = [binTreeRoot];
 
-    while (!(leftValue === null && rightValue === null)) {
-        if (level === 0) {
-            lines.push(value);
+    // Stack of levels corresponding to the search stack
+    const levelStack: number[] = [0];
+
+    while (searchStack.length > 0) {
+        const curNode: BinTreeNode = searchStack.pop();
+        const curLevel: number = levelStack.pop();
+
+        let linePrefix: string = '';
+
+        // Add appropriate prefixes to the line
+        if (curLevel !== 0) {
+            // Add level prefixes according to current level
+            for (let i = 0; i < curLevel; ++i) {
+                linePrefix += levelPrefix;
+            }
+        }
+        lines.push(linePrefix + curNode.value);
+
+        // Push children onto the stack if there are any
+        if (curNode.rightNode !== null) {
+            searchStack.push(curNode.rightNode);
+            levelStack.push(curLevel + 1);
+        }
+
+        if (curNode.leftNode !== null) {
+            searchStack.push(curNode.leftNode);
+            levelStack.push(curLevel + 1);
         }
     }
 
