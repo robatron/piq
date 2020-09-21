@@ -2,6 +2,7 @@ import {
     getBinaryTreeNodesInOrder,
     getBinaryTreeNodesPostOrder,
     getBinaryTreeNodesPreOrder,
+    getBinaryTreeNodesPreOrderIter,
 } from '../binTreeTraversal';
 import BinTreeNode from '../BinTreeNode';
 
@@ -51,6 +52,14 @@ describe('getBinaryTreeNodesPreOrder', () => {
     it('returns the nodes of a binary tree pre-order', () => {
         expect(
             getBinaryTreeNodesPreOrder(perfectBinarySearchTree),
+        ).toStrictEqual([7, 3, 1, 0, 2, 5, 4, 6, 11, 9, 8, 10, 13, 12, 14]);
+    });
+});
+
+describe('getBinaryTreeNodesPreOrderIter', () => {
+    it('returns the nodes of a binary tree pre-order iteratively', () => {
+        expect(
+            getBinaryTreeNodesPreOrderIter(perfectBinarySearchTree),
         ).toStrictEqual([7, 3, 1, 0, 2, 5, 4, 6, 11, 9, 8, 10, 13, 12, 14]);
     });
 });
