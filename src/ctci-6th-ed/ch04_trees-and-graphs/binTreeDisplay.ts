@@ -1,5 +1,17 @@
 import BinTreeNode from './BinTreeNode';
 
+enum ChildType {
+    finalChild,
+    middleChild,
+    root,
+}
+
+class BTSearchStackNode {
+    BTNode: BinTreeNode;
+    childType: ChildType;
+    level: number;
+}
+
 /**
  * Return the lines of an ASCII-art representation of a binary tree. Here's an
  * example using a family-relationships tree:
@@ -27,43 +39,60 @@ export const getBinTreeDisplayLines = (
     binTreeRoot: BinTreeNode,
 ): (number | string)[] => {
     // Line prefixes
-    const singling = '└── ';
-    const multiling = '├── ';
+    const finalChild = '└── ';
+    const middleChild = '├── ';
     const levelPrefix = '│    ';
 
     // Lines to return
     const lines: (number | string)[] = [];
 
     // Stack of nodes to search (DFS, pre-order)
-    const searchStack: BinTreeNode[] = [binTreeRoot];
-
-    // Stack of levels corresponding to the search stack
-    const levelStack: number[] = [0];
+    const searchStack: BTSearchStackNode[] = [
+        {
+            BTNode: binTreeRoot,
+            childType: ChildType.root,
+            level: 0,
+        },
+    ];
 
     while (searchStack.length > 0) {
-        const curNode: BinTreeNode = searchStack.pop();
-        const curLevel: number = levelStack.pop();
+        const {
+            BTNode,
+            childType,
+            level,
+        }: BTSearchStackNode = searchStack.pop();
 
         let linePrefix: string = '';
 
         // Add appropriate prefixes to the line
-        if (curLevel !== 0) {
+        if (level !== 0) {
             // Add level prefixes according to current level
-            for (let i = 0; i < curLevel; ++i) {
+            for (let i = 0; i < level; ++i) {
                 linePrefix += levelPrefix;
             }
+
+            // Add connection prefix
+            if (childType === ChildType.finalChild) {
+                linePrefix += finalChild;
+            }
         }
-        lines.push(linePrefix + curNode.value);
+        lines.push(linePrefix + BTNode.value);
 
         // Push children onto the stack if there are any
-        if (curNode.rightNode !== null) {
-            searchStack.push(curNode.rightNode);
-            levelStack.push(curLevel + 1);
+        if (BTNode.rightNode !== null) {
+            searchStack.push({
+                BTNode: BTNode.rightNode,
+                childType: ChildType.finalChild,
+                level: level + 1,
+            });
         }
 
-        if (curNode.leftNode !== null) {
-            searchStack.push(curNode.leftNode);
-            levelStack.push(curLevel + 1);
+        if (BTNode.leftNode !== null) {
+            searchStack.push({
+                BTNode: BTNode.leftNode,
+                childType: ChildType.finalChild,
+                level: level + 1,
+            });
         }
     }
 
