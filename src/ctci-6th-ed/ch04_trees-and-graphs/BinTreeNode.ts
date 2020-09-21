@@ -1,11 +1,11 @@
 // A binary tree node
 export default class BinTreeNode {
-    value: number;
+    value: number | string;
     leftNode: BinTreeNode;
     rightNode: BinTreeNode;
 
     constructor(
-        value: number,
+        value: number | string,
         leftNode: BinTreeNode = null,
         rightNode: BinTreeNode = null,
     ) {
