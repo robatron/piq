@@ -42,8 +42,29 @@ export const getBinaryTreeNodesPreOrder = (
     return nodeValues;
 };
 
-//
-//export const getBinaryTreeNodesPreOrderIterative(BTree: BinTreeNode)
+// Traverse a binary tree pre-order iteratively
+export const getBinaryTreeNodesPreOrderIter = (
+    BTree: BinTreeNode,
+): (number | string)[] => {
+    const nodeValues: (number | string)[] = [];
+    const traversalStack: BinTreeNode[] = [BTree];
+
+    while (traversalStack.length > 0) {
+        const curNode = traversalStack.pop();
+
+        nodeValues.push(curNode.value);
+
+        if (curNode.rightNode !== null) {
+            traversalStack.push(curNode.rightNode);
+        }
+
+        if (curNode.leftNode !== null) {
+            traversalStack.push(curNode.leftNode);
+        }
+    }
+
+    return nodeValues;
+};
 
 // Traverse a binary tree post-order (left node, right node, current node)
 export const getBinaryTreeNodesPostOrder = (
