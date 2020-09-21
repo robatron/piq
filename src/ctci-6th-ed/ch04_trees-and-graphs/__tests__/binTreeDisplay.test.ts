@@ -1,14 +1,48 @@
 import BinTreeNode from '../BinTreeNode';
 import { getBinTreeDisplayLines } from '../binTreeDisplay';
 
-// Test binary tree matching the first problem example
+// Test binary tree matching the example
 const testBinTree = new BinTreeNode(
-    1,
-    new BinTreeNode(2, new BinTreeNode(4), new BinTreeNode(5)),
+    'great-grandparent',
     new BinTreeNode(
-        3,
-        new BinTreeNode(9),
-        new BinTreeNode(8, new BinTreeNode(6), new BinTreeNode(7)),
+        'grandparent',
+        new BinTreeNode(
+            'parents',
+            new BinTreeNode(
+                'YOU',
+                new BinTreeNode('children', new BinTreeNode('grandchildren')),
+            ),
+            new BinTreeNode(
+                'sibling',
+                new BinTreeNode(
+                    'niece/nephew',
+                    new BinTreeNode('grandniece/nephew'),
+                ),
+            ),
+        ),
+        new BinTreeNode(
+            'aunt/uncle',
+            new BinTreeNode(
+                '1st-cousin',
+                new BinTreeNode(
+                    '1st-cousin-once-removed',
+                    new BinTreeNode('1st-cousin-twice-removed'),
+                ),
+            ),
+        ),
+    ),
+    new BinTreeNode(
+        'grandaunt/uncle',
+        new BinTreeNode(
+            '1st-cousin-once-removed',
+            new BinTreeNode(
+                '2nd-cousin',
+                new BinTreeNode(
+                    '2nd-cousin-once-removed',
+                    new BinTreeNode('2nd-cousin-twice-removed'),
+                ),
+            ),
+        ),
     ),
 );
 

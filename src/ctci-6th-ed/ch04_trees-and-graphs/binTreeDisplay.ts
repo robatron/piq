@@ -1,42 +1,47 @@
-/**
- * Write a program to draw a binary tree with fixed width fonts. Represent left
- * links with a `/` and right link with `\`. Assume values are single
- * characters or `null`. Example:
- *
- *       1
- *      / \
- *     /   \
- *    2     \
- *   / \     3
- *  4   5   / \
- *         9   \
- *              8
- *             / \
- *            6   7
- *
- * Advanced problem: handle multiple-character values.
- *
- *               7
- *              / \
- *             /   \
- *            /     \
- *           /       \
- *          /         \
- *         /           \
- *        /             \
- *       3               11
- *      / \             /  \
- *     /   \           /    \
- *    /     \         /      \
- *   1       5       9       13
- *  / \     / \     / \      / \
- * 0   2   4   6   8   10   12  14
- *
- * Problem based on
- * http://www.dsalgo.com/2016/01/draw-binary-tree-with-ascii.html
- */
-
 import BinTreeNode from './BinTreeNode';
 
-// Return the lines of an ASCII-art representation of a binary tree
-export const getBinTreeDisplayLines = (binTree: BinTreeNode): string[] => {};
+/**
+ * Return the lines of an ASCII-art representation of a binary tree. Here's an
+ * example using a family-relationships tree:
+ *
+ * great-grandparent
+ * ├── grandparent
+ * │   ├── parents
+ * │   │   ├── YOU
+ * │   │   │   └── children
+ * │   │   │       └── grandchildren
+ * │   │   └── sibling
+ * │   │       └── niece/nephew
+ * │   │           └── grandniece/nephew
+ * │   └── aunt/uncle
+ * │       └── 1st-cousin
+ * │           └── 1st-cousin-once-removed
+ * │               └── 1st-cousin-twice-removed
+ * └── grandaunt/uncle
+ *     └── 1st-cousin-once-removed
+ *         └── 2nd-cousin
+ *             └── 2nd-cousin-once-removed
+ *                 └── 2nd-cousin-twice-removed
+ */
+export const getBinTreeDisplayLines = (
+    binTree: BinTreeNode,
+): (number | string)[] => {
+    const oneling = '└─';
+    const twoling = '├─';
+    const spacer = '│';
+
+    const lines = [];
+
+    let level = 0;
+    let value = binTree.value;
+    let leftValue = binTree.leftNode.value;
+    let rightValue = binTree.rightNode.value;
+
+    while (!(leftValue === null && rightValue === null)) {
+        if (level === 0) {
+            lines.push(value);
+        }
+    }
+
+    return lines;
+};
