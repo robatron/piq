@@ -24,6 +24,6 @@ export default class Stack {
     }
 
     isEmpty(): boolean {
-        return !Boolean(this.s.length);
+        return !this.s.length;
     }
 }
