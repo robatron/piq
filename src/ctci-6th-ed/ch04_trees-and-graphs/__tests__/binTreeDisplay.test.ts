@@ -46,7 +46,7 @@ const testBinTree = new BinTreeNode(
     ),
 );
 
-describe('getBinTreeDisplayLines', () => {
+describe.only('getBinTreeDisplayLines', () => {
     it('returns the lines of an ASCII representation of a binary tree', () => {
         expect(getBinTreeDisplayLines(testBinTree)).toStrictEqual([]);
     });
