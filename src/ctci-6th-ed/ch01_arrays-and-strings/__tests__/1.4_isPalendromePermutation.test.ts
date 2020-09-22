@@ -22,7 +22,7 @@ describe('isPalendromePermutation', () => {
             });
         });
 
-        it('detects simple even palendromes', () => {
+        it('detects simple odd palendromes', () => {
             ['kayak', 'racecar', 'zerorez'].forEach((p) => {
                 expect(isPalendromePermutation(p)).toBe(true);
             });

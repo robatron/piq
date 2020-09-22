@@ -66,7 +66,7 @@ export const getBinTreeDisplayLines = (
             level,
         }: BTSearchStackNode = searchStack.pop();
 
-        let linePrefix: string = '';
+        let linePrefix = '';
 
         // Add appropriate prefixes to the line
         if (level !== 0) {
