@@ -66,19 +66,22 @@ export const getBinTreeDisplayLines = (
 
         // Add appropriate prefixes to the line
         if (level !== 0) {
-            // Add level prefixes according to current level
-            for (let i = 0; i < level; ++i) {
+            // Add level prefixes according to current level.
+            for (let i = 1; i < level; ++i) {
                 linePrefix += levelPrefix;
             }
 
             // Add connection prefix
-            if (childType === ChildType.finalChild) {
+            if (childType === ChildType.middleChild) {
+                linePrefix += middleChild;
+            } else if (childType === ChildType.finalChild) {
                 linePrefix += finalChild;
             }
         }
         lines.push(linePrefix + BTNode.value);
 
-        // Push children onto the stack if there are any
+        // Push the right node on first if there is one. The right node is
+        // always the final child (so it gets an 'L' prefix when displayed)
         if (BTNode.rightNode !== null) {
             searchStack.push({
                 BTNode: BTNode.rightNode,
@@ -87,10 +90,15 @@ export const getBinTreeDisplayLines = (
             });
         }
 
+        // Push the left node on if there is one. The left node is a middle
+        // child if there's also a right node, or a final child if it's the
+        // only one
         if (BTNode.leftNode !== null) {
             searchStack.push({
                 BTNode: BTNode.leftNode,
-                childType: ChildType.finalChild,
+                childType: BTNode.rightNode
+                    ? ChildType.middleChild
+                    : ChildType.finalChild,
                 level: level + 1,
             });
         }
