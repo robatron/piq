@@ -1,45 +1,38 @@
 import BinTreeNode from '../BinTreeNode';
 import { getBinTreeDisplayLines } from '../binTreeDisplay';
 
+const n = BinTreeNode;
+
 // Test binary tree matching the example
-const testBinTree = new BinTreeNode(
+const cousinTestBinTree = new n(
     'great-grandparent',
-    new BinTreeNode(
+    new n(
         'grandparent',
-        new BinTreeNode(
+        new n(
             'parents',
-            new BinTreeNode(
-                'YOU',
-                new BinTreeNode('children', new BinTreeNode('grandchildren')),
-            ),
-            new BinTreeNode(
-                'sibling',
-                new BinTreeNode(
-                    'niece/nephew',
-                    new BinTreeNode('grandniece/nephew'),
-                ),
-            ),
+            new n('YOU', new n('children', new n('grandchildren'))),
+            new n('sibling', new n('niece/nephew', new n('grandniece/nephew'))),
         ),
-        new BinTreeNode(
+        new n(
             'aunt/uncle',
-            new BinTreeNode(
+            new n(
                 '1st-cousin',
-                new BinTreeNode(
+                new n(
                     '1st-cousin-once-removed',
-                    new BinTreeNode('1st-cousin-twice-removed'),
+                    new n('1st-cousin-twice-removed'),
                 ),
             ),
         ),
     ),
-    new BinTreeNode(
+    new n(
         'grandaunt/uncle',
-        new BinTreeNode(
+        new n(
             '1st-cousin-once-removed',
-            new BinTreeNode(
+            new n(
                 '2nd-cousin',
-                new BinTreeNode(
+                new n(
                     '2nd-cousin-once-removed',
-                    new BinTreeNode('2nd-cousin-twice-removed'),
+                    new n('2nd-cousin-twice-removed'),
                 ),
             ),
         ),
@@ -47,8 +40,8 @@ const testBinTree = new BinTreeNode(
 );
 
 describe('getBinTreeDisplayLines', () => {
-    it('returns the lines of an ASCII representation of a binary tree', () => {
-        expect(getBinTreeDisplayLines(testBinTree)).toStrictEqual([
+    it('returns display lines of a cousin chart binary tree', () => {
+        expect(getBinTreeDisplayLines(cousinTestBinTree)).toStrictEqual([
             'great-grandparent',
             '├── grandparent',
             '│   ├── parents',
