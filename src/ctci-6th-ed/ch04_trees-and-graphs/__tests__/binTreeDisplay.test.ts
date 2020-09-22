@@ -46,8 +46,27 @@ const testBinTree = new BinTreeNode(
     ),
 );
 
-describe.only('getBinTreeDisplayLines', () => {
+describe('getBinTreeDisplayLines', () => {
     it('returns the lines of an ASCII representation of a binary tree', () => {
-        expect(getBinTreeDisplayLines(testBinTree)).toStrictEqual([]);
+        expect(getBinTreeDisplayLines(testBinTree)).toStrictEqual([
+            'great-grandparent',
+            '├── grandparent',
+            '│   ├── parents',
+            '│   │   ├── YOU',
+            '│   │   │   └── children',
+            '│   │   │       └── grandchildren',
+            '│   │   └── sibling',
+            '│   │       └── niece/nephew',
+            '│   │           └── grandniece/nephew',
+            '│   └── aunt/uncle',
+            '│       └── 1st-cousin',
+            '│           └── 1st-cousin-once-removed',
+            '│               └── 1st-cousin-twice-removed',
+            '└── grandaunt/uncle',
+            '    └── 1st-cousin-once-removed',
+            '        └── 2nd-cousin',
+            '            └── 2nd-cousin-once-removed',
+            '                └── 2nd-cousin-twice-removed',
+        ]);
     });
 });

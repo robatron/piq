@@ -41,10 +41,10 @@ export const getBinTreeDisplayLines = (
     // Line prefixes
     const finalChild = '└── ';
     const middleChild = '├── ';
-    const levelPrefix = '│    ';
+    const levelPrefix = '│   ';
     const blankPrefix = '    ';
 
-    // Lines to return
+    // Lines of the display to return
     const lines: (number | string)[] = [];
 
     // Stack of nodes to search (DFS, pre-order)
