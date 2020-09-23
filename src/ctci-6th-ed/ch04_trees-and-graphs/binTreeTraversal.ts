@@ -3,9 +3,9 @@ import BinTreeNode from './BinTreeNode';
 /**
  * Binary trees can be traversed in the following orders depth-first orders:
  *
- * - In-order (most common)
+ * - In-order (most common, what most people mean by "DFS")
  * - Pre-order (directory tree-style)
- * - Post-order
+ * - Post-order (rare)
  */
 
 // Traverse a binary tree in-order (left node, current node, right node)
