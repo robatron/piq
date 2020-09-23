@@ -1,39 +1,31 @@
-import BinTreeNode from '../BinTreeNode';
+import { cn } from '../BinTreeNode';
 import { getBinTreeDisplayLines } from '../binTreeDisplay';
 
-const n = BinTreeNode;
-
 // Test binary tree matching the example
-const cousinTestBinTree = new n(
+const cousinTestBinTree = cn(
     'great-grandparent',
-    new n(
+    cn(
         'grandparent',
-        new n(
+        cn(
             'parents',
-            new n('YOU', new n('children', new n('grandchildren'))),
-            new n('sibling', new n('niece/nephew', new n('grandniece/nephew'))),
+            cn('YOU', cn('children', cn('grandchildren'))),
+            cn('sibling', cn('niece/nephew', cn('grandniece/nephew'))),
         ),
-        new n(
+        cn(
             'aunt/uncle',
-            new n(
+            cn(
                 '1st-cousin',
-                new n(
-                    '1st-cousin-once-removed',
-                    new n('1st-cousin-twice-removed'),
-                ),
+                cn('1st-cousin-once-removed', cn('1st-cousin-twice-removed')),
             ),
         ),
     ),
-    new n(
+    cn(
         'grandaunt/uncle',
-        new n(
+        cn(
             '1st-cousin-once-removed',
-            new n(
+            cn(
                 '2nd-cousin',
-                new n(
-                    '2nd-cousin-once-removed',
-                    new n('2nd-cousin-twice-removed'),
-                ),
+                cn('2nd-cousin-once-removed', cn('2nd-cousin-twice-removed')),
             ),
         ),
     ),
