@@ -13,13 +13,13 @@ export const getBinaryTreeNodesInOrder = (
     BTree: BinTreeNode,
 ): (number | string)[] => {
     let nodeValues: (number | string)[] = [];
-    if (BTree !== null) {
+    if (BTree) {
         nodeValues = nodeValues.concat(
-            getBinaryTreeNodesInOrder(BTree.leftNode),
+            getBinaryTreeNodesInOrder(BTree.getLeftChild()),
         );
         nodeValues.push(BTree.value);
         nodeValues = nodeValues.concat(
-            getBinaryTreeNodesInOrder(BTree.rightNode),
+            getBinaryTreeNodesInOrder(BTree.getRightChild()),
         );
     }
     return nodeValues;
@@ -30,13 +30,13 @@ export const getBinaryTreeNodesPreOrder = (
     BTree: BinTreeNode,
 ): (number | string)[] => {
     let nodeValues: (number | string)[] = [];
-    if (BTree !== null) {
+    if (BTree) {
         nodeValues.push(BTree.value);
         nodeValues = nodeValues.concat(
-            getBinaryTreeNodesPreOrder(BTree.leftNode),
+            getBinaryTreeNodesPreOrder(BTree.getLeftChild()),
         );
         nodeValues = nodeValues.concat(
-            getBinaryTreeNodesPreOrder(BTree.rightNode),
+            getBinaryTreeNodesPreOrder(BTree.getRightChild()),
         );
     }
     return nodeValues;
@@ -51,15 +51,17 @@ export const getBinaryTreeNodesPreOrderIter = (
 
     while (traversalStack.length > 0) {
         const curNode = traversalStack.pop();
+        const rightChild = curNode.getRightChild();
+        const leftChild = curNode.getLeftChild();
 
         nodeValues.push(curNode.value);
 
-        if (curNode.rightNode !== null) {
-            traversalStack.push(curNode.rightNode);
+        if (rightChild) {
+            traversalStack.push(rightChild);
         }
 
-        if (curNode.leftNode !== null) {
-            traversalStack.push(curNode.leftNode);
+        if (leftChild) {
+            traversalStack.push(leftChild);
         }
     }
 
@@ -71,12 +73,12 @@ export const getBinaryTreeNodesPostOrder = (
     BTree: BinTreeNode,
 ): (number | string)[] => {
     let nodeValues: (number | string)[] = [];
-    if (BTree !== null) {
+    if (BTree) {
         nodeValues = nodeValues.concat(
-            getBinaryTreeNodesPostOrder(BTree.leftNode),
+            getBinaryTreeNodesPostOrder(BTree.getLeftChild()),
         );
         nodeValues = nodeValues.concat(
-            getBinaryTreeNodesPostOrder(BTree.rightNode),
+            getBinaryTreeNodesPostOrder(BTree.getRightChild()),
         );
         nodeValues.push(BTree.value);
     }
