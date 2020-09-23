@@ -14,3 +14,10 @@ export default class BinTreeNode {
         this.rightNode = rightNode;
     }
 }
+
+// Helper function to create a new binary tree node
+export const cn = (
+    v: number | string,
+    l: BinTreeNode = null,
+    r: BinTreeNode = null,
+): BinTreeNode => new BinTreeNode(v, l, r);
