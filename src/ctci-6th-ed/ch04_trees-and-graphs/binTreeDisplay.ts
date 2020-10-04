@@ -1,14 +1,13 @@
-import BinTreeNode from './BinTreeNode';
+import BinTreeNode, { ChildType } from './BinTreeNode';
 
-enum ChildType {
-    finalChild,
-    middleChild,
-    root,
+enum SiblingType {
+    final,
+    middle,
 }
 
 class BTSearchStackNode {
     BTNode: BinTreeNode;
-    childType: ChildType;
+    siblingType: SiblingType;
     level: number;
 }
 
@@ -37,12 +36,15 @@ class BTSearchStackNode {
  */
 export const getBinTreeDisplayLines = (
     binTreeRoot: BinTreeNode,
+    showLeftRightLabel = false,
 ): (number | string)[] => {
     // Line prefixes
-    const prefixChildFinal = '└── ';
+    const prefixChildFinal = '└──';
+    const prefixLabelLeft = '[L] ';
+    const prefixLabelRight = '[R] ';
     const prefixLevel = '    ';
     const prefixLevelEdge = '│   ';
-    const prefixMiddleChild = '├── ';
+    const prefixMiddleChild = '├──';
 
     // Lines of the display to return
     const lines: (number | string)[] = [];
@@ -52,7 +54,7 @@ export const getBinTreeDisplayLines = (
     const searchStack: BTSearchStackNode[] = [
         {
             BTNode: binTreeRoot,
-            childType: ChildType.root,
+            siblingType: null,
             level: 0,
         },
     ];
@@ -64,9 +66,11 @@ export const getBinTreeDisplayLines = (
         // Grab the next node to process for this line
         const {
             BTNode,
-            childType,
+            siblingType,
             level,
         }: BTSearchStackNode = searchStack.pop();
+        const leftChild = BTNode.getLeftChild();
+        const rightChild = BTNode.getRightChild();
 
         // Line to build upon
         let linePrefix = '';
@@ -91,11 +95,24 @@ export const getBinTreeDisplayLines = (
 
             // Add a child connection prefix. If we're printing a final child,
             // remove the level edge for following lines.
-            if (childType === ChildType.middleChild) {
+            if (siblingType === SiblingType.middle) {
                 linePrefix += prefixMiddleChild;
-            } else if (childType === ChildType.finalChild) {
+            } else if (siblingType === SiblingType.final) {
                 linePrefix += prefixChildFinal;
                 levelEdges[level] = false;
+            }
+
+            // Add a left (L) or a right (R) label to show what kind of a child
+            // this is
+            if (showLeftRightLabel) {
+                if (BTNode.childType === ChildType.left) {
+                    linePrefix += prefixLabelLeft;
+                }
+                if (BTNode.childType === ChildType.right) {
+                    linePrefix += prefixLabelRight;
+                }
+            } else {
+                linePrefix += ' ';
             }
         }
 
@@ -105,10 +122,10 @@ export const getBinTreeDisplayLines = (
 
         // Push the right node on first if there is one. The right node is
         // always the final child (so it gets an 'L' prefix when displayed)
-        if (BTNode.rightNode !== null) {
+        if (rightChild) {
             searchStack.push({
-                BTNode: BTNode.rightNode,
-                childType: ChildType.finalChild,
+                BTNode: rightChild,
+                siblingType: SiblingType.final,
                 level: level + 1,
             });
         }
@@ -116,18 +133,18 @@ export const getBinTreeDisplayLines = (
         // Push the left node on if there is one. The left node is a middle
         // child if there's also a right node, or a final child if it's the
         // only one. If it's a middle child, set an edge at that level.
-        if (BTNode.leftNode !== null) {
+        if (leftChild) {
             const lvl = level + 1;
-            let childType = ChildType.finalChild;
+            let siblingType = SiblingType.final;
 
-            if (BTNode.rightNode !== null) {
+            if (rightChild) {
                 levelEdges[lvl] = true;
-                childType = ChildType.middleChild;
+                siblingType = SiblingType.middle;
             }
 
             searchStack.push({
-                BTNode: BTNode.leftNode,
-                childType,
+                BTNode: leftChild,
+                siblingType,
                 level: level + 1,
             });
         }
