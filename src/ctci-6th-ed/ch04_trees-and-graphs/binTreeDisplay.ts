@@ -49,6 +49,11 @@ export const getBinTreeDisplayLines = (
     // Lines of the display to return
     const lines: (number | string)[] = [];
 
+    // Nothing to display if the tree is null
+    if (!binTreeRoot) {
+        return lines;
+    }
+
     // Stack of nodes to search, keeping track of levels and sibling
     // status. Begin with the tree root.
     const searchStack: BTSearchStackNode[] = [
@@ -105,10 +110,10 @@ export const getBinTreeDisplayLines = (
             // Add a left (L) or a right (R) label to show what kind of a child
             // this is
             if (showLeftRightLabel) {
-                if (BTNode.childType === ChildType.left) {
+                if (BTNode.getChildType() === ChildType.left) {
                     linePrefix += prefixLabelLeft;
                 }
-                if (BTNode.childType === ChildType.right) {
+                if (BTNode.getChildType() === ChildType.right) {
                     linePrefix += prefixLabelRight;
                 }
             } else {

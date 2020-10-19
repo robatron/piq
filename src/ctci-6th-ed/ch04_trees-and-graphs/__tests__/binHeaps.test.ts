@@ -1,5 +1,5 @@
 import { cn } from '../BinTreeNode';
-import { HeapType, insert, isValidHeap } from '../binHeaps';
+import { extract, HeapType, insert, isValidHeap } from '../binHeaps';
 import { getBinTreeDisplayLines } from '../binTreeDisplay';
 
 describe('isValidHeap', () => {
@@ -37,6 +37,112 @@ describe('isValidHeap', () => {
     });
 });
 
+describe('extract', () => {
+    [HeapType.max, HeapType.min].forEach((heapType) => {
+        const heapTypeName = HeapType[heapType];
+        describe(`both heap types`, () => {
+            it(`throws if the ${heapTypeName} heap is invalid`, () => {
+                const heap = cn(1, null, cn(3));
+                expect(() => {
+                    extract(heapType, heap);
+                }).toThrowErrorMatchingInlineSnapshot(
+                    `"Extract failed. Invalid ${heapTypeName} heap."`,
+                );
+            });
+
+            it('returns the heap as root and new heap if heap contains only one node', () => {
+                const heap = cn(1);
+
+                const [heapRoot, newHeap] = extract(heapType, heap);
+
+                expect(heapRoot).toStrictEqual(heap);
+                expect(newHeap).toStrictEqual(heap);
+            });
+
+            it('returns the root node and new heap when no reordering is necessary', () => {
+                const heap = cn(1, cn(1), cn(1));
+
+                const [heapRoot, newHeap] = extract(heapType, heap);
+
+                expect(heapRoot).toStrictEqual(cn(1));
+                expect(newHeap).toStrictEqual(cn(1, cn(1)));
+            });
+        });
+    });
+
+    describe(`max heap type`, () => {
+        const heapType = HeapType.max;
+
+        it('returns the root node and reordered tree', () => {
+            // Heap before
+            const heap = cn(7, cn(6, cn(4), cn(3)), cn(5, cn(2), cn(1)));
+            expect(getBinTreeDisplayLines(heap, true)).toMatchInlineSnapshot(`
+                Array [
+                  "7",
+                  "├──[L] 6",
+                  "│   ├──[L] 4",
+                  "│   └──[R] 3",
+                  "└──[R] 5",
+                  "    ├──[L] 2",
+                  "    └──[R] 1",
+                ]
+            `);
+
+            const [heapRoot, newHeap] = extract(heapType, heap);
+
+            // Expect root to be extracted, and tree to be reordered
+            expect(heapRoot).toStrictEqual(cn(7));
+            expect(getBinTreeDisplayLines(newHeap, true))
+                .toMatchInlineSnapshot(`
+                Array [
+                  "6",
+                  "├──[L] 4",
+                  "│   ├──[L] 1",
+                  "│   └──[R] 3",
+                  "└──[R] 5",
+                  "    └──[L] 2",
+                ]
+            `);
+        });
+    });
+
+    describe(`min heap type`, () => {
+        const heapType = HeapType.min;
+
+        it('returns the root node and reordered tree', () => {
+            // Heap before
+            const heap = cn(1, cn(2, cn(4), cn(5)), cn(3, cn(6), cn(7)));
+            expect(getBinTreeDisplayLines(heap, true)).toMatchInlineSnapshot(`
+                Array [
+                  "1",
+                  "├──[L] 2",
+                  "│   ├──[L] 4",
+                  "│   └──[R] 5",
+                  "└──[R] 3",
+                  "    ├──[L] 6",
+                  "    └──[R] 7",
+                ]
+            `);
+
+            const [heapRoot, newHeap] = extract(heapType, heap);
+
+            // Expect root to be extracted, and tree to be reordered
+            expect(heapRoot).toStrictEqual(cn(1));
+            expect(getBinTreeDisplayLines(newHeap, true))
+                .toMatchInlineSnapshot(`
+                Array [
+                  "2",
+                  "├──[L] 4",
+                  "│   ├──[L] 7",
+                  "│   └──[R] 5",
+                  "└──[R] 3",
+                  "    └──[L] 6",
+                ]
+            `);
+        });
+    });
+});
+
 describe('insert', () => {
     describe('HeapType.max', () => {
         const heapType = HeapType.max;
@@ -51,9 +157,35 @@ describe('insert', () => {
                     cn(5, cn(2), cn(1)),
                 );
 
+                expect(getBinTreeDisplayLines(heap, true))
+                    .toMatchInlineSnapshot(`
+                    Array [
+                      "7",
+                      "├──[L] 6",
+                      "│   ├──[L] 4",
+                      "│   └──[R] 3",
+                      "└──[R] 5",
+                      "    ├──[L] 2",
+                      "    └──[R] 1",
+                    ]
+                `);
+
                 const actual = insert(heapType, heap, target);
 
                 expect(actual).toStrictEqual(expected);
+                expect(getBinTreeDisplayLines(actual, true))
+                    .toMatchInlineSnapshot(`
+                    Array [
+                      "7",
+                      "├──[L] 6.5",
+                      "│   ├──[L] 6",
+                      "│   │   └──[L] 4",
+                      "│   └──[R] 3",
+                      "└──[R] 5",
+                      "    ├──[L] 2",
+                      "    └──[R] 1",
+                    ]
+                `);
             });
 
             it('into the end of the heap (no swapping)', () => {

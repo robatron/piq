@@ -8,7 +8,12 @@
  *
  * There are two primary operations of binary heaps: insert and extract min/max.
  */
-import { appendToCompleteBinTree, isCompleteBinTree } from './binTreeUtils';
+import {
+    appendToCompleteBinTree,
+    getLastNodeInCompleteBinTree,
+    isCompleteBinTree,
+    swapBinTreeNodes,
+} from './binTreeUtils';
 import BinTreeNode, { ChildType } from './BinTreeNode';
 import { getBinTreeDisplayLines } from './binTreeDisplay';
 
@@ -19,6 +24,22 @@ export enum HeapType {
     max,
     min,
 }
+
+/**
+ * Determine of the parent should swap with the child given the heap type
+ *
+ * @param parent Parent node
+ * @param child Specific child node
+ * @param heapType Type of heap
+ */
+const shouldSwap = (
+    parent: BinTreeNode,
+    child: BinTreeNode,
+    heapType: HeapType,
+): boolean =>
+    heapType === HeapType.max
+        ? child?.value > parent?.value
+        : child?.value < parent?.value;
 
 /**
  * Tests a binary tree to see if it's a valid min or max heap. Both types of
@@ -50,21 +71,75 @@ export const isValidHeap = (
             const childNode = curNode[childNodeAccessors[i]]();
 
             if (childNode) {
-                const satisfiesHeapRule =
-                    heapType === HeapType.max
-                        ? curNode.value >= childNode.value
-                        : curNode.value <= childNode.value;
-
-                if (!satisfiesHeapRule) {
+                if (shouldSwap(curNode, childNode, heapType)) {
                     return false;
                 }
-
                 searchStack.push(childNode);
             }
         }
     }
 
     return true;
+};
+
+/**
+ * Extracts the topmost node of a heap, and rearranges the heap to maintain
+ * min/max heapedness.
+ *
+ * @param heapRoot  The target heap's root. This MAY BE MODIFIED.
+ * @param heapType  The heap type, min or max
+ */
+export const extract = (
+    heapType: HeapType,
+    heapRoot: BinTreeNode,
+): [BinTreeNode, BinTreeNode] => {
+    // Validate the heap
+    if (!isValidHeap(heapType, heapRoot)) {
+        const heapTypeName = HeapType[heapType];
+        throw new Error(`Extract failed. Invalid ${heapTypeName} heap.`);
+    }
+
+    // If the root node is the only node in the heap, there's nothing to do
+    if (heapRoot.isChildless()) {
+        return [heapRoot, heapRoot];
+    }
+
+    // Swap the heap's root and last nodes
+    const lastNode = getLastNodeInCompleteBinTree(heapRoot);
+    swapBinTreeNodes(heapRoot, lastNode);
+
+    // Emancipate the heapRoot after the swap since it should now be in the
+    // last position to prepare for reordering of the heap
+    heapRoot.emancipate();
+
+    // Track the new root, which is now lastNode after the swap
+    let newHeap = lastNode;
+    let newHeapUpdatedOnce = false;
+
+    // Now that lastNode is in the root position, we need to swap it with its
+    // children until it's in the appropriate position.
+    //  - For max-heaps, lastNode must be > than all of its children
+    //  - For min-heaps, lastNode must be < than all of its children
+    while (
+        shouldSwap(lastNode, lastNode.getLeftChild(), heapType) ||
+        shouldSwap(lastNode, lastNode.getRightChild(), heapType)
+    ) {
+        const leftChild = lastNode.getLeftChild();
+        const rightChild = lastNode.getRightChild();
+        const childToSwap = shouldSwap(lastNode, leftChild, heapType)
+            ? leftChild
+            : rightChild;
+
+        swapBinTreeNodes(lastNode, childToSwap);
+
+        if (!newHeapUpdatedOnce) {
+            newHeap = childToSwap;
+            newHeapUpdatedOnce = true;
+        }
+    }
+
+    // Finally, return the emancipated heapRoot
+    return [heapRoot, newHeap];
 };
 
 /**
@@ -98,41 +173,18 @@ export const insert = (
     //  - For max-heaps, every parent should be > all children
     //  - For min-heaps, every parent should be < children
     while (
-        target.parent && heapType === HeapType.max
-            ? target.value > target.parent?.value
-            : target.value < target.parent?.value
+        target.getParent() && heapType === HeapType.max
+            ? target.value > target.getParent()?.value
+            : target.value < target.getParent()?.value
     ) {
-        const parent = target.parent;
-        const grandparent = parent?.parent;
+        const parent = target.getParent();
+        const grandparent = parent?.getParent();
 
-        // Target orphans its children, then adopts its parent and sibling
-        const targetLeftOrphan = target.getLeftChild();
-        const targetRightOrphan = target.getRightChild();
+        swapBinTreeNodes(parent, target);
 
-        if (target.childType === ChildType.left) {
-            target.setLeftChild(parent);
-            target.setRightChild(parent.getRightChild());
-        } else {
-            target.setRightChild(parent);
-            target.setLeftChild(parent.getLeftChild());
-        }
-
-        // The parent adopts target's orphaned children
-        parent.setLeftChild(targetLeftOrphan);
-        parent.setRightChild(targetRightOrphan);
-
-        // If there's a grandparent, it adopts target
-        if (grandparent) {
-            if (parent.childType === ChildType.left) {
-                grandparent.setLeftChild(target);
-            } else {
-                grandparent.setRightChild(target);
-            }
-        }
-
-        // Else there's no grandparent, so promote the target to the root
-        // of the heap and emancipate it
-        else {
+        // If the target has no grandparent, promote it to the root of the heap
+        // and emancipate it
+        if (!grandparent) {
             target.emancipate();
             heapTree = target;
         }
