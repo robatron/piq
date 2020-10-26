@@ -7,11 +7,10 @@ export const enum ChildType {
 // its parent node
 export default class BinTreeNode {
     value: number | string;
-    parent: BinTreeNode = null;
-    childType: ChildType = null;
 
-    private _leftChild: BinTreeNode;
-    private _rightChild: BinTreeNode;
+    private parent: BinTreeNode = null;
+    private leftChild: BinTreeNode;
+    private rightChild: BinTreeNode;
 
     constructor(
         value: number | string = null,
@@ -23,39 +22,76 @@ export default class BinTreeNode {
         this.setRightChild(rightChild);
     }
 
-    isChildless(): boolean {
-        return !this._leftChild && !this._rightChild;
+    // Return the parent. Don't allow it to be set directly.
+    getParent(): BinTreeNode {
+        return this.parent;
     }
 
-    // Renouce parents, become a man/woman
-    emancipate(): void {
-        this.parent = null;
-        this.childType = null;
-    }
-
-    // Left child node accessors
-    getLeftChild(): BinTreeNode {
-        return this._leftChild;
-    }
-
-    setLeftChild(newNode: BinTreeNode): void {
-        this._leftChild = newNode;
-        if (newNode) {
-            this._leftChild.parent = this;
-            this._leftChild.childType = ChildType.left;
+    // Dynamically return what kind of child this node is, if any
+    getChildType(): ChildType {
+        if (this.parent) {
+            if (this.parent.getLeftChild() === this) {
+                return ChildType.left;
+            } else if (this.parent.getRightChild() === this) {
+                return ChildType.right;
+            } else {
+                throw new Error(
+                    'Node has parent, but parent does not have child',
+                );
+            }
         }
+        return null;
     }
 
-    // Right child node accessors
+    // Get the left or right child node
+    getLeftChild(): BinTreeNode {
+        return this.leftChild;
+    }
     getRightChild(): BinTreeNode {
-        return this._rightChild;
+        return this.rightChild;
     }
 
-    setRightChild(newNode: BinTreeNode): void {
-        this._rightChild = newNode;
+    // Return if this node has any children
+    isChildless(): boolean {
+        return !this.leftChild && !this.rightChild;
+    }
+
+    // Adopt a new left or right child, or abandon it by passing `null`
+    setLeftChild(newNode: BinTreeNode): void {
         if (newNode) {
-            this._rightChild.parent = this;
-            this._rightChild.childType = ChildType.right;
+            newNode.parent = this;
+        } else if (this.leftChild) {
+            this.leftChild.parent = null;
+        }
+        this.leftChild = newNode;
+    }
+    setRightChild(newNode: BinTreeNode): void {
+        if (newNode) {
+            newNode.parent = this;
+        } else if (this.rightChild) {
+            this.rightChild.parent = null;
+        }
+        this.rightChild = newNode;
+    }
+
+    // Give up custody of both children if they exist
+    abandonChildren(): void {
+        this.setLeftChild(null);
+        this.setRightChild(null);
+    }
+
+    // Renouce parent if there is one, become a man/woman
+    emancipate(): void {
+        if (this.parent) {
+            if (this.getChildType() === ChildType.left) {
+                this.parent.setLeftChild(null);
+            } else if (this.getChildType() === ChildType.right) {
+                this.parent.setRightChild(null);
+            } else {
+                throw new Error(
+                    "This node has a parent, but can't determine child type",
+                );
+            }
         }
     }
 }

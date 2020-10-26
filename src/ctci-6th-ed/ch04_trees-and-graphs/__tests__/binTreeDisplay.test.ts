@@ -32,6 +32,10 @@ const cousinTestBinTree = cn(
 );
 
 describe('getBinTreeDisplayLines', () => {
+    it('returns an empty list of display lines if the tree is null', () => {
+        expect(getBinTreeDisplayLines(null)).toMatchInlineSnapshot(`Array []`);
+    });
+
     it('returns display lines of a cousin chart binary tree', () => {
         expect(getBinTreeDisplayLines(cousinTestBinTree))
             .toMatchInlineSnapshot(`
