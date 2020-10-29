@@ -3,7 +3,7 @@ export class GraphNode<T = number> {
     neighbors: GraphNode[];
     visited = false;
 
-    constructor(value: T, neighbors: GraphNode[]) {
+    constructor(value: T, neighbors: GraphNode[] = []) {
         this.value = value;
         this.neighbors = neighbors;
     }
