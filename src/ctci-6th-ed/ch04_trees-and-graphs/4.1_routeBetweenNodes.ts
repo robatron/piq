@@ -12,40 +12,40 @@ import { GraphNode } from './GraphNode';
 export const isRouteBetweenNodes = (
     A: GraphNode = null,
     B: GraphNode = null,
-    isReverseDirection = false,
 ): boolean => {
-    const searchQueue: GraphNode[] = [A];
+    const searchQueueA: GraphNode[] = [A];
+    const searchQueueB: GraphNode[] = [B];
 
     // If either node is null, there is no route
     if ([A, B].some((n) => !n)) {
         return false;
     }
 
-    // Breadth-first search from A -> B
-    while (searchQueue.length) {
-        const curNode = searchQueue.pop();
+    // Breadth-first search from A -> B and from B -> A simultaneously
+    while (searchQueueA.length || searchQueueB.length) {
+        const curNodeA = searchQueueA.pop();
+        const curNodeB = searchQueueB.pop();
 
-        if (!curNode.visited) {
-            // If we find B, there is a route between A and B
-            if (curNode === B) {
+        // If we find B, there is a route between A and B. Otherwise, insert
+        // the neighbors at the beginning of the array and continue the BFS.
+        if (curNodeA && !curNodeA.visited) {
+            if (curNodeA === B) {
                 return true;
             }
+            searchQueueA.unshift(...curNodeA.neighbors);
+            curNodeA.visited = true;
+        }
 
-            // Otherwise, insert the neighbors at the beginning of the array,
-            // continue the BFS
-            searchQueue.unshift(...curNode.neighbors);
-
-            curNode.visited = true;
+        // Same thing, but for B
+        if (curNodeB && !curNodeB.visited) {
+            if (curNodeB === A) {
+                return true;
+            }
+            searchQueueA.unshift(...curNodeA.neighbors);
+            curNodeA.visited = true;
         }
     }
 
-    // If we didn't find a route from A -> B, recursively look for a route from
-    // B -> A but set isReverseDirection so we don't
-    if (!isReverseDirection) {
-        return isRouteBetweenNodes(B, A, true);
-    }
-
-    // Finally, if after a full BFS both directions we don't find a route,
-    // return false
+    // Finally, if after a full BFS we don't find a route, we'll never find one
     return false;
 };
