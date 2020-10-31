@@ -17,21 +17,21 @@ describe('isRouteBetweenNodes', () => {
 
             expect(actual).toBe(true);
         });
-
-        it.skip('returns true if there is a direct route B -> A', () => {
-            const B = new GraphNode(2);
-            const A = new GraphNode(1, [B]);
-
-            const actual = isRouteBetweenNodes(B, A);
-
-            expect(actual).toBe(true);
-        });
     });
 
     describe('indirect route', () => {
         it('returns true if there is an indirect route A -> B', () => {
             const B = new GraphNode(3);
             const A = new GraphNode(1, [new GraphNode(2, [B])]);
+
+            const actual = isRouteBetweenNodes(A, B);
+
+            expect(actual).toBe(true);
+        });
+
+        it('returns true if there is an indirect route B -> A', () => {
+            const A = new GraphNode(3);
+            const B = new GraphNode(1, [new GraphNode(2, [A])]);
 
             const actual = isRouteBetweenNodes(A, B);
 

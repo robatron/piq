@@ -28,21 +28,21 @@ export const isRouteBetweenNodes = (
 
         // If we find B, there is a route between A and B. Otherwise, insert
         // the neighbors at the beginning of the array and continue the BFS.
-        if (curNodeA && !curNodeA.visited) {
+        if (curNodeA && !curNodeA.getVisited('A')) {
             if (curNodeA === B) {
                 return true;
             }
             searchQueueA.unshift(...curNodeA.neighbors);
-            curNodeA.visited = true;
+            curNodeA.setVisited('A');
         }
 
         // Same thing, but for B
-        if (curNodeB && !curNodeB.visited) {
+        if (curNodeB && !curNodeB.getVisited('B')) {
             if (curNodeB === A) {
                 return true;
             }
-            searchQueueA.unshift(...curNodeA.neighbors);
-            curNodeA.visited = true;
+            searchQueueB.unshift(...curNodeB.neighbors);
+            curNodeB.setVisited('B');
         }
     }
 
