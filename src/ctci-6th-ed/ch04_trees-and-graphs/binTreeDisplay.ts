@@ -5,39 +5,52 @@ enum SiblingType {
     middle,
 }
 
-class BTSearchStackNode {
+type BTSearchStackNode = {
     BTNode: BinTreeNode;
     siblingType: SiblingType;
     level: number;
-}
+};
+
+type getBinTreeDisplayLinesOpts = {
+    showLeftRightLabel?: boolean;
+    reverseLeftRightOrder?: boolean;
+};
 
 /**
  * Return the lines of an ASCII-art representation of a binary tree. Here's an
  * example using a family-relationships tree:
  *
- * great-grandparent
- * ├── grandparent
- * │   ├── parents
- * │   │   ├── YOU
- * │   │   │   └── children
- * │   │   │       └── grandchildren
- * │   │   └── sibling
- * │   │       └── niece/nephew
- * │   │           └── grandniece/nephew
- * │   └── aunt/uncle
- * │       └── 1st-cousin
- * │           └── 1st-cousin-once-removed
- * │               └── 1st-cousin-twice-removed
- * └── grandaunt/uncle
- *     └── 1st-cousin-once-removed
- *         └── 2nd-cousin
- *             └── 2nd-cousin-once-removed
- *                 └── 2nd-cousin-twice-removed
+ *  Array [
+ *      "great-grandparent",
+ *      "├──[L] grandparent",
+ *      "│   ├──[L] parents",
+ *      "│   │   ├──[L] YOU",
+ *      "│   │   │   └──[L] children",
+ *      "│   │   │       └──[L] grandchildren",
+ *      "│   │   └──[R] sibling",
+ *      "│   │       └──[L] niece/nephew",
+ *      "│   │           └──[L] grandniece/nephew",
+ *      "│   └──[R] aunt/uncle",
+ *      "│       └──[L] 1st-cousin",
+ *      "│           └──[L] 1st-cousin-once-removed",
+ *      "│               └──[L] 1st-cousin-twice-removed",
+ *      "└──[R] grandaunt/uncle",
+ *      "    └──[L] 1st-cousin-once-removed",
+ *      "        └──[L] 2nd-cousin",
+ *      "            └──[L] 2nd-cousin-once-removed",
+ *      "                └──[L] 2nd-cousin-twice-removed",
+ *  ]
  */
 export const getBinTreeDisplayLines = (
     binTreeRoot: BinTreeNode,
-    showLeftRightLabel = false,
+    opts?: getBinTreeDisplayLinesOpts,
 ): (number | string)[] => {
+    const { showLeftRightLabel, reverseLeftRightOrder } = {
+        showLeftRightLabel: true,
+        reverseLeftRightOrder: false,
+        ...opts,
+    };
+
     // Line prefixes
     const prefixChildFinal = '└──';
     const prefixLabelLeft = '[L] ';
