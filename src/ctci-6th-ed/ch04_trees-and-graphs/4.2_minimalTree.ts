@@ -10,7 +10,7 @@ export const minimalTree = (
     binTreeArray: number[],
     rootIndex = 0,
 ): BinTreeNode => {
-    const rootVal = binTreeArray[0];
+    const rootVal = binTreeArray[rootIndex];
     let leftChild = null;
     let rightChild = null;
 
@@ -21,38 +21,45 @@ export const minimalTree = (
 
     // If there's a left child value, create a left node
     if (binTreeArray[1]) {
-        const leftChildIdx = 1;
-        const leftChildLeftIdx = 2 * leftChildIdx + 1;
-        const leftChildRightIdx = 2 * leftChildIdx + 2;
+        const leftChildIdx = rootIndex + Math.pow(2, rootIndex);
+        const leftChildLeftIdx = leftChildIdx + Math.pow(2, leftChildIdx);
+        const leftChildRightIdx = leftChildIdx + Math.pow(2, leftChildIdx) + 1;
 
         leftChild = cn(binTreeArray[leftChildIdx]);
 
         // If there's a left grandchild value, recursively call minimalTree
         // with it as the root
         if (binTreeArray[leftChildLeftIdx]) {
-            leftChild.setLeftChild(
-                minimalTree(binTreeArray.slice(leftChildIdx)),
-            );
+            leftChild.setLeftChild(minimalTree(binTreeArray, leftChildLeftIdx));
         }
 
         // If there's a right grandchild value, recursively call minimalTree
         // with it as the root
         if (binTreeArray[leftChildRightIdx]) {
             leftChild.setRightChild(
-                minimalTree(binTreeArray.slice(leftChildRightIdx)),
+                minimalTree(binTreeArray, leftChildRightIdx),
             );
         }
     }
 
     if (binTreeArray[2]) {
-        rightChild = cn(binTreeArray[2]);
+        const rightChildIdx = rootIndex + Math.pow(2, rootIndex) + 1;
+        const rightChildLeftIdx = rightChildIdx + Math.pow(2, rightChildIdx);
+        const rightChildRightIdx =
+            rightChildIdx + Math.pow(2, rightChildIdx) + 1;
 
-        if (binTreeArray[5]) {
-            leftChild.setLeftChild(minimalTree(binTreeArray.slice(5)));
+        rightChild = cn(binTreeArray[rightChildIdx]);
+
+        if (binTreeArray[rightChildLeftIdx]) {
+            leftChild.setLeftChild(
+                minimalTree(binTreeArray, rightChildLeftIdx),
+            );
         }
 
-        if (binTreeArray[6]) {
-            leftChild.setRightChild(minimalTree(binTreeArray.slice(6)));
+        if (binTreeArray[rightChildRightIdx]) {
+            leftChild.setRightChild(
+                minimalTree(binTreeArray, rightChildRightIdx),
+            );
         }
     }
 
