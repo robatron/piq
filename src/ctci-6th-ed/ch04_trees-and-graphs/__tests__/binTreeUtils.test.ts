@@ -21,7 +21,8 @@ describe('appendToCompleteBinTree', () => {
             appendToCompleteBinTree(tree, target);
 
             expect(tree).toStrictEqual(expected);
-            expect(getBinTreeDisplayLines(tree, true)).toMatchInlineSnapshot(`
+            expect(getBinTreeDisplayLines(tree, { showLeftRightLabel: true }))
+                .toMatchInlineSnapshot(`
                 Array [
                   "1",
                   "├──[L] 2",
@@ -43,7 +44,8 @@ describe('appendToCompleteBinTree', () => {
             appendToCompleteBinTree(tree, target);
 
             expect(tree).toStrictEqual(expected);
-            expect(getBinTreeDisplayLines(tree, true)).toMatchInlineSnapshot(`
+            expect(getBinTreeDisplayLines(tree, { showLeftRightLabel: true }))
+                .toMatchInlineSnapshot(`
                 Array [
                   "1",
                   "├──[L] 2",
@@ -64,7 +66,8 @@ describe('appendToCompleteBinTree', () => {
             appendToCompleteBinTree(tree, target);
 
             expect(tree).toStrictEqual(expected);
-            expect(getBinTreeDisplayLines(tree, true)).toMatchInlineSnapshot(`
+            expect(getBinTreeDisplayLines(tree, { showLeftRightLabel: true }))
+                .toMatchInlineSnapshot(`
                 Array [
                   "1",
                   "├──[L] 2",
@@ -85,7 +88,8 @@ describe('appendToCompleteBinTree', () => {
         const actual = appendToCompleteBinTree(tree, target);
 
         expect(actual).toStrictEqual(expected);
-        expect(getBinTreeDisplayLines(target, true)).toMatchInlineSnapshot(`
+        expect(getBinTreeDisplayLines(target, { showLeftRightLabel: true }))
+            .toMatchInlineSnapshot(`
             Array [
               "🎯",
             ]
@@ -170,7 +174,8 @@ describe('swapBinTreeNodes', () => {
         swapBinTreeNodes(nodeA, nodeB);
 
         expect(actualTree).toStrictEqual(expectedTree);
-        expect(getBinTreeDisplayLines(actualTree, true)).toMatchInlineSnapshot(`
+        expect(getBinTreeDisplayLines(actualTree, { showLeftRightLabel: true }))
+            .toMatchInlineSnapshot(`
             Array [
               "1",
               "├──[L] 2",
@@ -192,7 +197,8 @@ describe('swapBinTreeNodes', () => {
         swapBinTreeNodes(nodeA, nodeB);
 
         expect(actualTree).toStrictEqual(expectedTree);
-        expect(getBinTreeDisplayLines(actualTree, true)).toMatchInlineSnapshot(`
+        expect(getBinTreeDisplayLines(actualTree, { showLeftRightLabel: true }))
+            .toMatchInlineSnapshot(`
             Array [
               "1",
               "├──[L] 7",
@@ -214,7 +220,8 @@ describe('swapBinTreeNodes', () => {
         swapBinTreeNodes(nodeA, nodeB);
 
         expect(actualTree).toStrictEqual(expectedTree);
-        expect(getBinTreeDisplayLines(actualTree, true)).toMatchInlineSnapshot(`
+        expect(getBinTreeDisplayLines(actualTree, { showLeftRightLabel: true }))
+            .toMatchInlineSnapshot(`
             Array [
               "1",
               "├──[L] 2",
@@ -235,7 +242,8 @@ describe('swapBinTreeNodes', () => {
         swapBinTreeNodes(nodeA, nodeB);
 
         expect(nodeA).toStrictEqual(expectedTree);
-        expect(getBinTreeDisplayLines(nodeA, true)).toMatchInlineSnapshot(`
+        expect(getBinTreeDisplayLines(nodeA, { showLeftRightLabel: true }))
+            .toMatchInlineSnapshot(`
             Array [
               "7",
               "├──[L] 2",

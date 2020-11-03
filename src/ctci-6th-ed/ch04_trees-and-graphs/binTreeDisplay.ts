@@ -5,11 +5,16 @@ enum SiblingType {
     middle,
 }
 
-class BTSearchStackNode {
+type BTSearchStackNode = {
     BTNode: BinTreeNode;
     siblingType: SiblingType;
     level: number;
-}
+};
+
+type getBinTreeDisplayLinesOpts = {
+    showLeftRightLabel?: boolean;
+    reverseLeftRightOrder?: boolean;
+};
 
 /**
  * Return the lines of an ASCII-art representation of a binary tree. Here's an
@@ -36,8 +41,14 @@ class BTSearchStackNode {
  */
 export const getBinTreeDisplayLines = (
     binTreeRoot: BinTreeNode,
-    showLeftRightLabel = false,
+    opts?: getBinTreeDisplayLinesOpts,
 ): (number | string)[] => {
+    const { showLeftRightLabel, reverseLeftRightOrder } = {
+        showLeftRightLabel: false,
+        reverseLeftRightOrder: false,
+        ...opts,
+    };
+
     // Line prefixes
     const prefixChildFinal = '└──';
     const prefixLabelLeft = '[L] ';

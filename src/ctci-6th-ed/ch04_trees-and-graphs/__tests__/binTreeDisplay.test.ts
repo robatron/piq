@@ -63,8 +63,11 @@ describe('getBinTreeDisplayLines', () => {
     });
 
     it('shows left/right child labels', () => {
-        expect(getBinTreeDisplayLines(cousinTestBinTree, true))
-            .toMatchInlineSnapshot(`
+        expect(
+            getBinTreeDisplayLines(cousinTestBinTree, {
+                showLeftRightLabel: true,
+            }),
+        ).toMatchInlineSnapshot(`
             Array [
               "great-grandparent",
               "├──[L] grandparent",

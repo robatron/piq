@@ -7,7 +7,9 @@ describe(minimalTree, () => {
         const treeArr = [...Array(15).keys()];
         const actual = minimalTree(treeArr);
 
-        const actualDisplay = getBinTreeDisplayLines(actual, true);
+        const actualDisplay = getBinTreeDisplayLines(actual, {
+            showLeftRightLabel: true,
+        });
         console.log(
             '🚀: actualDisplay',
             JSON.stringify(actualDisplay, null, 2),

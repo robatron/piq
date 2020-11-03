@@ -76,7 +76,8 @@ describe('extract', () => {
         it('returns the root node and reordered tree', () => {
             // Heap before
             const heap = cn(7, cn(6, cn(4), cn(3)), cn(5, cn(2), cn(1)));
-            expect(getBinTreeDisplayLines(heap, true)).toMatchInlineSnapshot(`
+            expect(getBinTreeDisplayLines(heap, { showLeftRightLabel: true }))
+                .toMatchInlineSnapshot(`
                 Array [
                   "7",
                   "├──[L] 6",
@@ -92,8 +93,9 @@ describe('extract', () => {
 
             // Expect root to be extracted, and tree to be reordered
             expect(heapRoot).toStrictEqual(cn(7));
-            expect(getBinTreeDisplayLines(newHeap, true))
-                .toMatchInlineSnapshot(`
+            expect(
+                getBinTreeDisplayLines(newHeap, { showLeftRightLabel: true }),
+            ).toMatchInlineSnapshot(`
                 Array [
                   "6",
                   "├──[L] 4",
@@ -112,7 +114,8 @@ describe('extract', () => {
         it('returns the root node and reordered tree', () => {
             // Heap before
             const heap = cn(1, cn(2, cn(4), cn(5)), cn(3, cn(6), cn(7)));
-            expect(getBinTreeDisplayLines(heap, true)).toMatchInlineSnapshot(`
+            expect(getBinTreeDisplayLines(heap, { showLeftRightLabel: true }))
+                .toMatchInlineSnapshot(`
                 Array [
                   "1",
                   "├──[L] 2",
@@ -128,8 +131,9 @@ describe('extract', () => {
 
             // Expect root to be extracted, and tree to be reordered
             expect(heapRoot).toStrictEqual(cn(1));
-            expect(getBinTreeDisplayLines(newHeap, true))
-                .toMatchInlineSnapshot(`
+            expect(
+                getBinTreeDisplayLines(newHeap, { showLeftRightLabel: true }),
+            ).toMatchInlineSnapshot(`
                 Array [
                   "2",
                   "├──[L] 4",
@@ -157,8 +161,9 @@ describe('insert', () => {
                     cn(5, cn(2), cn(1)),
                 );
 
-                expect(getBinTreeDisplayLines(heap, true))
-                    .toMatchInlineSnapshot(`
+                expect(
+                    getBinTreeDisplayLines(heap, { showLeftRightLabel: true }),
+                ).toMatchInlineSnapshot(`
                     Array [
                       "7",
                       "├──[L] 6",
@@ -173,8 +178,11 @@ describe('insert', () => {
                 const actual = insert(heapType, heap, target);
 
                 expect(actual).toStrictEqual(expected);
-                expect(getBinTreeDisplayLines(actual, true))
-                    .toMatchInlineSnapshot(`
+                expect(
+                    getBinTreeDisplayLines(actual, {
+                        showLeftRightLabel: true,
+                    }),
+                ).toMatchInlineSnapshot(`
                     Array [
                       "7",
                       "├──[L] 6.5",
