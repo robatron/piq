@@ -14,7 +14,7 @@ export const minimalTree = (
 
     // Base case: return immediately if no root value
     if (typeof rootVal !== 'number') {
-        return;
+        return null;
     }
 
     const leftChildIdx = 2 * rootIndex + 1;

@@ -60,4 +60,8 @@ describe(minimalTree, () => {
 
         expect(actual).toStrictEqual(expected);
     });
+
+    it('returns null if no root value', () => {
+        expect(minimalTree([])).toBeNull();
+    });
 });
