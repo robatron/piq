@@ -33,9 +33,7 @@ describe(minimalTree, () => {
             ),
         );
 
-        const actualDisplay = getBinTreeDisplayLines(actual, {
-            showLeftRightLabel: true,
-        });
+        const actualDisplay = getBinTreeDisplayLines(actual);
         console.log(
             '🚀: actualDisplay',
             JSON.stringify(actualDisplay, null, 2),
