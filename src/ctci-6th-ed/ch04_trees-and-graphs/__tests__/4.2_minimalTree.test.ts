@@ -1,5 +1,4 @@
 import { minimalTree } from '../4.2_minimalTree';
-import { getBinTreeDisplayLines } from '../binTreeDisplay';
 import { cn } from '../BinTreeNode';
 
 describe(minimalTree, () => {
@@ -33,10 +32,30 @@ describe(minimalTree, () => {
             ),
         );
 
-        const actualDisplay = getBinTreeDisplayLines(actual);
-        console.log(
-            '🚀: actualDisplay',
-            JSON.stringify(actualDisplay, null, 2),
+        expect(actual).toStrictEqual(expected);
+    });
+
+    it('constructs imperfect trees', () => {
+        // Create a 15-length array with elements 0-9
+        const treeArr = [...Array(10).keys()];
+        const actual = minimalTree(treeArr);
+
+        // prettier-ignore
+        const expected = cn(
+            0,
+            cn(1,
+                cn(3,
+                    cn(7),
+                    cn(8)
+                ),
+                cn(4,
+                    cn(9)
+                )
+            ),
+            cn(2,
+                cn(5),
+                cn(6)
+            ),
         );
 
         expect(actual).toStrictEqual(expected);
