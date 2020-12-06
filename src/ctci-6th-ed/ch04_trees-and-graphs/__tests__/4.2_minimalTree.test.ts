@@ -1,5 +1,5 @@
-import { minimalTree } from '../4.2_minimalTree';
 import { cn } from '../BinTreeNode';
+import { minimalTree } from '../4.2_minimalTree';
 
 describe(minimalTree, () => {
     it('constructs a binary search tree of minimal height from an array with unique, increasing integers', () => {
