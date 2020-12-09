@@ -1,5 +1,10 @@
 import BinTreeNode from './BinTreeNode';
 
+interface BFSearchItem {
+    level: number;
+    node: BinTreeNode;
+}
+
 /**
  * 4.3 - List of Depths
  *
@@ -14,32 +19,34 @@ import BinTreeNode from './BinTreeNode';
 export const listOfDepths = (
     binTreeRoot: BinTreeNode,
 ): Array<Array<number>> => {
-    const listOfNodes = [];
     const listOfDepths = [];
-    const searchQueue = [binTreeRoot];
+    const searchQueue: BFSearchItem[] = [
+        {
+            level: 0,
+            node: binTreeRoot,
+        },
+    ];
 
     while (searchQueue.length) {
-        const curNode = searchQueue.pop();
-        const leftChild = curNode.getLeftChild();
-        const rightChild = curNode.getRightChild();
+        const { level, node } = searchQueue.pop();
+        const leftChild = node.getLeftChild();
+        const rightChild = node.getRightChild();
 
-        listOfNodes.push(curNode.value);
+        listOfDepths[level] = listOfDepths[level] || [];
+        listOfDepths[level].push(node.value);
 
         if (leftChild) {
-            searchQueue.unshift(leftChild);
+            searchQueue.unshift({
+                level: level + 1,
+                node: leftChild,
+            });
         }
 
         if (rightChild) {
-            searchQueue.unshift(rightChild);
-        }
-    }
-
-    for (let i = 0; i < listOfNodes.length; ++i) {
-        const start = Math.pow(2, i);
-        const end = Math.pow(2, i + 1);
-        const curDepth = listOfNodes.slice(start, end);
-        if (curDepth.length) {
-            listOfDepths.push(curDepth);
+            searchQueue.unshift({
+                level: level + 1,
+                node: rightChild,
+            });
         }
     }
 
