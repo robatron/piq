@@ -6,7 +6,8 @@ describe('BinTreeNode', () => {
         it('sets the value to null by default', () => {
             const tree = new BinTreeNode();
             expect(tree.value).toBeNull();
-            expect(getBinTreeDisplayLines(tree, true)).toMatchInlineSnapshot(`
+            expect(getBinTreeDisplayLines(tree, { showLeftRightLabel: true }))
+                .toMatchInlineSnapshot(`
                 Array [
                   "null",
                 ]
@@ -16,7 +17,8 @@ describe('BinTreeNode', () => {
         it('can assign a value', () => {
             const tree = new BinTreeNode('test-val');
             expect(tree.value).toEqual('test-val');
-            expect(getBinTreeDisplayLines(tree, true)).toMatchInlineSnapshot(`
+            expect(getBinTreeDisplayLines(tree, { showLeftRightLabel: true }))
+                .toMatchInlineSnapshot(`
                 Array [
                   "test-val",
                 ]
@@ -36,7 +38,8 @@ describe('BinTreeNode', () => {
             expect(rightChild.getParent()).toStrictEqual(tree);
             expect(rightChild.getChildType()).toEqual(ChildType.right);
 
-            expect(getBinTreeDisplayLines(tree, true)).toMatchInlineSnapshot(`
+            expect(getBinTreeDisplayLines(tree, { showLeftRightLabel: true }))
+                .toMatchInlineSnapshot(`
                 Array [
                   "root",
                   "├──[L] left-child",
@@ -53,7 +56,8 @@ describe('BinTreeNode', () => {
 
             const tree = new BinTreeNode('parent');
 
-            expect(getBinTreeDisplayLines(tree, true)).toMatchInlineSnapshot(`
+            expect(getBinTreeDisplayLines(tree, { showLeftRightLabel: true }))
+                .toMatchInlineSnapshot(`
                 Array [
                   "parent",
                 ]
@@ -70,7 +74,8 @@ describe('BinTreeNode', () => {
             expect(rightChild.getParent()).toStrictEqual(tree);
             expect(rightChild.getChildType()).toEqual(ChildType.right);
 
-            expect(getBinTreeDisplayLines(tree, true)).toMatchInlineSnapshot(`
+            expect(getBinTreeDisplayLines(tree, { showLeftRightLabel: true }))
+                .toMatchInlineSnapshot(`
                 Array [
                   "parent",
                   "├──[L] left-child",
@@ -84,7 +89,8 @@ describe('BinTreeNode', () => {
             const rightChild = new BinTreeNode('right-child');
             const tree = new BinTreeNode('parent', leftChild, rightChild);
 
-            expect(getBinTreeDisplayLines(tree, true)).toMatchInlineSnapshot(`
+            expect(getBinTreeDisplayLines(tree, { showLeftRightLabel: true }))
+                .toMatchInlineSnapshot(`
                 Array [
                   "parent",
                   "├──[L] left-child",
@@ -99,7 +105,8 @@ describe('BinTreeNode', () => {
             expect(leftChild.getParent()).toBeNull();
             expect(leftChild.getChildType()).toBeNull();
 
-            expect(getBinTreeDisplayLines(tree, true)).toMatchInlineSnapshot(`
+            expect(getBinTreeDisplayLines(tree, { showLeftRightLabel: true }))
+                .toMatchInlineSnapshot(`
                 Array [
                   "parent",
                   "└──[R] right-child",
@@ -112,7 +119,8 @@ describe('BinTreeNode', () => {
             const rightChild = new BinTreeNode('right-child');
             const tree = new BinTreeNode('parent', leftChild, rightChild);
 
-            expect(getBinTreeDisplayLines(tree, true)).toMatchInlineSnapshot(`
+            expect(getBinTreeDisplayLines(tree, { showLeftRightLabel: true }))
+                .toMatchInlineSnapshot(`
                 Array [
                   "parent",
                   "├──[L] left-child",
@@ -127,7 +135,8 @@ describe('BinTreeNode', () => {
             expect(rightChild.getParent()).toBeNull();
             expect(rightChild.getChildType()).toBeNull();
 
-            expect(getBinTreeDisplayLines(tree, true)).toMatchInlineSnapshot(`
+            expect(getBinTreeDisplayLines(tree, { showLeftRightLabel: true }))
+                .toMatchInlineSnapshot(`
                 Array [
                   "parent",
                   "└──[L] left-child",
@@ -161,7 +170,8 @@ describe('BinTreeNode', () => {
             const rightChild = new BinTreeNode('right-child');
             const tree = new BinTreeNode('parent', leftChild, rightChild);
 
-            expect(getBinTreeDisplayLines(tree, true)).toMatchInlineSnapshot(`
+            expect(getBinTreeDisplayLines(tree, { showLeftRightLabel: true }))
+                .toMatchInlineSnapshot(`
                 Array [
                   "parent",
                   "├──[L] left-child",
@@ -174,7 +184,8 @@ describe('BinTreeNode', () => {
             expect(tree.getLeftChild()).toBeNull();
             expect(tree.getRightChild()).toBeNull();
 
-            expect(getBinTreeDisplayLines(tree, true)).toMatchInlineSnapshot(`
+            expect(getBinTreeDisplayLines(tree, { showLeftRightLabel: true }))
+                .toMatchInlineSnapshot(`
                 Array [
                   "parent",
                 ]
@@ -204,7 +215,8 @@ describe('BinTreeNode', () => {
 
             expect(leftChild.getParent()).toStrictEqual(tree);
             expect(leftChild.getChildType()).toStrictEqual(ChildType.left);
-            expect(getBinTreeDisplayLines(tree, true)).toMatchInlineSnapshot(`
+            expect(getBinTreeDisplayLines(tree, { showLeftRightLabel: true }))
+                .toMatchInlineSnapshot(`
                 Array [
                   "parent",
                   "├──[L] left-child",
@@ -216,7 +228,8 @@ describe('BinTreeNode', () => {
 
             expect(leftChild.getParent()).toBeNull();
             expect(leftChild.getChildType()).toBeNull();
-            expect(getBinTreeDisplayLines(tree, true)).toMatchInlineSnapshot(`
+            expect(getBinTreeDisplayLines(tree, { showLeftRightLabel: true }))
+                .toMatchInlineSnapshot(`
                 Array [
                   "parent",
                   "└──[R] right-child",
@@ -231,7 +244,8 @@ describe('BinTreeNode', () => {
 
             expect(rightChild.getParent()).toStrictEqual(tree);
             expect(rightChild.getChildType()).toStrictEqual(ChildType.right);
-            expect(getBinTreeDisplayLines(tree, true)).toMatchInlineSnapshot(`
+            expect(getBinTreeDisplayLines(tree, { showLeftRightLabel: true }))
+                .toMatchInlineSnapshot(`
                 Array [
                   "parent",
                   "├──[L] left-child",
@@ -243,7 +257,8 @@ describe('BinTreeNode', () => {
 
             expect(rightChild.getParent()).toBeNull();
             expect(rightChild.getChildType()).toBeNull();
-            expect(getBinTreeDisplayLines(tree, true)).toMatchInlineSnapshot(`
+            expect(getBinTreeDisplayLines(tree, { showLeftRightLabel: true }))
+                .toMatchInlineSnapshot(`
                 Array [
                   "parent",
                   "└──[L] left-child",
@@ -256,7 +271,8 @@ describe('BinTreeNode', () => {
 describe('cn', () => {
     it('creates a new BinTreeNode', () => {
         const tree = cn('root', cn('left'), cn('right'));
-        expect(getBinTreeDisplayLines(tree, true)).toMatchInlineSnapshot(`
+        expect(getBinTreeDisplayLines(tree, { showLeftRightLabel: true }))
+            .toMatchInlineSnapshot(`
             Array [
               "root",
               "├──[L] left",
