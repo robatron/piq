@@ -4,22 +4,22 @@
 
 export default class Stack {
     // The stack data structure
-    s: any[] = [];
+    s: Array<number | string> = [];
 
     // Push an item onto the stack
-    push(item: any): void {
+    push(item: number | string): void {
         this.s[this.s.length] = item;
     }
 
     // Pop an item off the stack
-    pop(): any {
+    pop(): number | string {
         const targetIndex: number = this.s.length - 1;
-        const item: any = this.s[targetIndex];
+        const item: number | string = this.s[targetIndex];
         this.s.splice(targetIndex, 1);
         return item;
     }
 
-    peek(): any {
+    peek(): number | string {
         return this.s[this.s.length - 1];
     }
 

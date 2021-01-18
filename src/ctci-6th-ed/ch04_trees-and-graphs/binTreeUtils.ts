@@ -1,6 +1,5 @@
 // This file contains common binary tree utilities
 
-import { getBinTreeDisplayLines } from './binTreeDisplay';
 import BinTreeNode, { ChildType } from './BinTreeNode';
 
 /**

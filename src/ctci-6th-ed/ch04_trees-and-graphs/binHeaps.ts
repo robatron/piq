@@ -14,8 +14,7 @@ import {
     isCompleteBinTree,
     swapBinTreeNodes,
 } from './binTreeUtils';
-import BinTreeNode, { ChildType } from './BinTreeNode';
-import { getBinTreeDisplayLines } from './binTreeDisplay';
+import BinTreeNode from './BinTreeNode';
 
 /**
  * Max or min heap
