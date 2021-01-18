@@ -46,9 +46,9 @@ export default class multiStack {
     cursors: CursorMap = {};
 
     // Single array contains all elements of all stacks
-    stacks: number[] = [];
+    stacks: Array<string | number> = [];
 
-    push(stackName: string, item: any): void {
+    push(stackName: string, item: number | string): void {
         // Get the current cursor
         let cursor = this.cursors[stackName];
 
@@ -71,7 +71,7 @@ export default class multiStack {
         this.stacks.splice(cursor, 0, item);
     }
 
-    pop(stackName: string): any {
+    pop(stackName: string): number | string {
         // Return immediately if stack is empty
         if (this.isEmpty(stackName)) {
             return;
@@ -98,7 +98,7 @@ export default class multiStack {
         return item;
     }
 
-    peek(stackName: string): any {
+    peek(stackName: string): number | string {
         const cursor = this.cursors[stackName];
         return this.stacks[cursor];
     }
