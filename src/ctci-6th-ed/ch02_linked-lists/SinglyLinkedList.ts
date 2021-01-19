@@ -53,4 +53,23 @@ export default class SinglyLinkedList {
 
         return curNode;
     }
+
+    /** Reverse this list */
+    reverse(): void {
+        const nodes: Array<SinglyLinkedListNode> = [];
+        let curNode = this.head;
+
+        while (curNode) {
+            nodes.push(curNode);
+            curNode = curNode.next;
+        }
+
+        for (let i = nodes.length - 1; i >= 0; --i) {
+            const curRevNode = nodes[i];
+            const nextRevNode = nodes[i - 1];
+            curRevNode.next = nextRevNode || null;
+        }
+
+        this.head = nodes[nodes.length - 1] || null;
+    }
 }

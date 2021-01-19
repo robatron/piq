@@ -99,4 +99,18 @@ describe('SinglyLinkedList', () => {
             `);
         });
     });
+
+    describe('reverse', () => {
+        it('reverses the list', () => {
+            const testList = new SinglyLinkedList([0, 1, 2, 3, 4]);
+            testList.reverse();
+            expect(testList.toArray()).toStrictEqual([4, 3, 2, 1, 0]);
+        });
+
+        it('does nothing if the list is empty', () => {
+            const testList = new SinglyLinkedList();
+            testList.reverse();
+            expect(testList.head).toBeNull();
+        });
+    });
 });
