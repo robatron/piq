@@ -3,17 +3,17 @@ export enum SortDirection {
     descending,
 }
 
-/** Sort list w/ bubble sort, ascending by default */
+/**
+ * Sort list w/ bubble sort
+ */
 export const bubbleSort = (
     list: Array<number>,
     sortDir: SortDirection = SortDirection.ascending,
 ): void => {
-    let finished = false;
+    let curScanSwapCount;
 
-    while (!finished) {
-        // Start each scan with the 'finished' flag set. If a swap is needed
-        // during the scan, we know we have to do at least one more scan.
-        finished = true;
+    do {
+        curScanSwapCount = 0;
 
         list.forEach((val, idx) => {
             const nextIdx = idx + 1;
@@ -26,8 +26,8 @@ export const bubbleSort = (
             if (needSwap) {
                 list[idx] = nextVal;
                 list[nextIdx] = val;
-                finished = false;
+                curScanSwapCount++;
             }
         });
-    }
+    } while (curScanSwapCount);
 };
