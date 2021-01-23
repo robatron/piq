@@ -6,7 +6,6 @@
 
         // Don't actually emit anything; We're just using TypeScript in tests.
         "noEmit": true,
-        "outDir": "./build/"
     },
     "include": ["src/**/*.ts"],
     "exclude": ["node_modules"]
