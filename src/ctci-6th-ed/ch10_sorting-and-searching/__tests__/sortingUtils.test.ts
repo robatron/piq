@@ -1,6 +1,16 @@
 import { bubbleSort, SortDirection } from '../sortingUtils';
 
 describe('bubbleSort', () => {
+    it('does nothing if the list is null', () => {
+        expect(bubbleSort(null)).toBeUndefined();
+    });
+
+    it('does nothing if the list is empty', () => {
+        const testArray = [];
+        bubbleSort(testArray);
+        expect(testArray).toStrictEqual([]);
+    });
+
     it('sorts an array of numbers in ascending order', () => {
         const testArray = [60, 41, 21, 96, 86, 1];
         bubbleSort(testArray);

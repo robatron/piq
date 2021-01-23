@@ -10,6 +10,10 @@ export const bubbleSort = (
     list: Array<number>,
     sortDir: SortDirection = SortDirection.ascending,
 ): void => {
+    if (!list?.length) {
+        return;
+    }
+
     let curScanSwapCount;
 
     do {
