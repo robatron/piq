@@ -45,9 +45,8 @@ export const getBinTreeDisplayLines = (
     binTreeRoot: BinTreeNode,
     opts?: getBinTreeDisplayLinesOpts,
 ): (number | string)[] => {
-    const { showLeftRightLabel, reverseLeftRightOrder } = {
+    const { showLeftRightLabel } = {
         showLeftRightLabel: true,
-        reverseLeftRightOrder: false,
         ...opts,
     };
 
