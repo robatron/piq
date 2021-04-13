@@ -1,0 +1,271 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`module consts ALL_CARD_CODES should match expected values 1`] = `
+Array [
+  "AC",
+  "2C",
+  "3C",
+  "4C",
+  "5C",
+  "6C",
+  "7C",
+  "8C",
+  "9C",
+  "TC",
+  "JC",
+  "QC",
+  "KC",
+  "AD",
+  "2D",
+  "3D",
+  "4D",
+  "5D",
+  "6D",
+  "7D",
+  "8D",
+  "9D",
+  "TD",
+  "JD",
+  "QD",
+  "KD",
+  "AH",
+  "2H",
+  "3H",
+  "4H",
+  "5H",
+  "6H",
+  "7H",
+  "8H",
+  "9H",
+  "TH",
+  "JH",
+  "QH",
+  "KH",
+  "AS",
+  "2S",
+  "3S",
+  "4S",
+  "5S",
+  "6S",
+  "7S",
+  "8S",
+  "9S",
+  "TS",
+  "JS",
+  "QS",
+  "KS",
+]
+`;
+
+exports[`module consts ALL_CARDS should match expected values 1`] = `
+Array [
+  Card {
+    "_rank": "ace",
+    "_suit": "clubs",
+  },
+  Card {
+    "_rank": 2,
+    "_suit": "clubs",
+  },
+  Card {
+    "_rank": 3,
+    "_suit": "clubs",
+  },
+  Card {
+    "_rank": 4,
+    "_suit": "clubs",
+  },
+  Card {
+    "_rank": 5,
+    "_suit": "clubs",
+  },
+  Card {
+    "_rank": 6,
+    "_suit": "clubs",
+  },
+  Card {
+    "_rank": 7,
+    "_suit": "clubs",
+  },
+  Card {
+    "_rank": 8,
+    "_suit": "clubs",
+  },
+  Card {
+    "_rank": 9,
+    "_suit": "clubs",
+  },
+  Card {
+    "_rank": 10,
+    "_suit": "clubs",
+  },
+  Card {
+    "_rank": "jack",
+    "_suit": "clubs",
+  },
+  Card {
+    "_rank": "queen",
+    "_suit": "clubs",
+  },
+  Card {
+    "_rank": "king",
+    "_suit": "clubs",
+  },
+  Card {
+    "_rank": "ace",
+    "_suit": "diamonds",
+  },
+  Card {
+    "_rank": 2,
+    "_suit": "diamonds",
+  },
+  Card {
+    "_rank": 3,
+    "_suit": "diamonds",
+  },
+  Card {
+    "_rank": 4,
+    "_suit": "diamonds",
+  },
+  Card {
+    "_rank": 5,
+    "_suit": "diamonds",
+  },
+  Card {
+    "_rank": 6,
+    "_suit": "diamonds",
+  },
+  Card {
+    "_rank": 7,
+    "_suit": "diamonds",
+  },
+  Card {
+    "_rank": 8,
+    "_suit": "diamonds",
+  },
+  Card {
+    "_rank": 9,
+    "_suit": "diamonds",
+  },
+  Card {
+    "_rank": 10,
+    "_suit": "diamonds",
+  },
+  Card {
+    "_rank": "jack",
+    "_suit": "diamonds",
+  },
+  Card {
+    "_rank": "queen",
+    "_suit": "diamonds",
+  },
+  Card {
+    "_rank": "king",
+    "_suit": "diamonds",
+  },
+  Card {
+    "_rank": "ace",
+    "_suit": "hearts",
+  },
+  Card {
+    "_rank": 2,
+    "_suit": "hearts",
+  },
+  Card {
+    "_rank": 3,
+    "_suit": "hearts",
+  },
+  Card {
+    "_rank": 4,
+    "_suit": "hearts",
+  },
+  Card {
+    "_rank": 5,
+    "_suit": "hearts",
+  },
+  Card {
+    "_rank": 6,
+    "_suit": "hearts",
+  },
+  Card {
+    "_rank": 7,
+    "_suit": "hearts",
+  },
+  Card {
+    "_rank": 8,
+    "_suit": "hearts",
+  },
+  Card {
+    "_rank": 9,
+    "_suit": "hearts",
+  },
+  Card {
+    "_rank": 10,
+    "_suit": "hearts",
+  },
+  Card {
+    "_rank": "jack",
+    "_suit": "hearts",
+  },
+  Card {
+    "_rank": "queen",
+    "_suit": "hearts",
+  },
+  Card {
+    "_rank": "king",
+    "_suit": "hearts",
+  },
+  Card {
+    "_rank": "ace",
+    "_suit": "spades",
+  },
+  Card {
+    "_rank": 2,
+    "_suit": "spades",
+  },
+  Card {
+    "_rank": 3,
+    "_suit": "spades",
+  },
+  Card {
+    "_rank": 4,
+    "_suit": "spades",
+  },
+  Card {
+    "_rank": 5,
+    "_suit": "spades",
+  },
+  Card {
+    "_rank": 6,
+    "_suit": "spades",
+  },
+  Card {
+    "_rank": 7,
+    "_suit": "spades",
+  },
+  Card {
+    "_rank": 8,
+    "_suit": "spades",
+  },
+  Card {
+    "_rank": 9,
+    "_suit": "spades",
+  },
+  Card {
+    "_rank": 10,
+    "_suit": "spades",
+  },
+  Card {
+    "_rank": "jack",
+    "_suit": "spades",
+  },
+  Card {
+    "_rank": "queen",
+    "_suit": "spades",
+  },
+  Card {
+    "_rank": "king",
+    "_suit": "spades",
+  },
+]
+`;
