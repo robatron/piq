@@ -49,7 +49,7 @@ function assert(condition, desc) {
   }
 }
 */
-const isSetsEqual = (as: Set<number>, bs: Set<number>): boolean => {
+const isSetsEqual = (as: Set<string>, bs: Set<string>): boolean => {
     if (as.size !== bs.size) {
         return false;
     }
@@ -90,10 +90,6 @@ it('handles a two character string', () => {
 it('handles a multi-char string', () => {
     const input = 'abc';
     const actual = getPerms(input);
-    console.log(
-        '🚀 ~ file: recursiveStringPermutations.test.ts ~ line 91 ~ it ~ actual',
-        actual,
-    );
     const expected = new Set(['abc', 'acb', 'bac', 'bca', 'cab', 'cba']);
 
     expect(isSetsEqual(actual, expected)).toBe(true);
