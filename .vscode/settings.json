@@ -17,5 +17,7 @@
     },
     "peacock.color": "#59e392",
     "editor.formatOnSave": true,
-    "editor.formatOnSaveMode": "file"
+    "editor.formatOnSaveMode": "file",
+    "rewrap.wrappingColumn": 80,
+    "rewrap.reformat": true
 }
