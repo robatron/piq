@@ -42,10 +42,16 @@ even for very large numbers, like Unix timestamps. In any case, the spirit of
 the challenge is to merge meetings where startTime and endTime don't have an
 upper bound.
 
+Bonus:
+    1. What if we did have an upper bound on the input values? Could we improve
+       our runtime?
+    2. Would it cost us memory? Could we do this "in place" on the input array
+       and save some space? What are the pros and cons of doing this in place?
+
 Notes:
-  - [m1] [m2]       - n overlap
-  - [m1 [ ] m2]     - m2 starts before m1 ends
-  - [m2 [m1] m2]    - m1 starts and ends inside m2
+    - [m1] [m2]       - n overlap
+    - [m1 [ ] m2]     - m2 starts before m1 ends
+    - [m2 [m1] m2]    - m1 starts and ends inside m2
 
 https://www.interviewcake.com/question/javascript/merging-ranges
 */
