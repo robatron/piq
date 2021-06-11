@@ -20,11 +20,13 @@ https://www.interviewcake.com/question/javascript/merge-sorted-arrays
 */
 
 export default (arr1: number[], arr2: number[]): number[] => {
+    // Final array. This will take O(n) space (arr1.length + arr2.length)
     const sortedArray: number[] = [];
 
     let i1 = 0;
     let i2 = 0;
 
+    // Walk through the entirety of each array once. This will take O(n) time
     while (i1 < arr1.length && i2 < arr2.length) {
         const a1 = arr1[i1];
         const a2 = arr2[i2];
