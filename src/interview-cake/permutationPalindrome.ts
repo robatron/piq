@@ -18,31 +18,18 @@ fully understand the question before starting. Jumping in with a flawed
 understanding of the problem doesn't look good in an interview.
 */
 export default (word: string): boolean => {
-    const isOddWordLength = Boolean(word.length % 2);
-    const chars = word.split('');
-    const oddChars = new Set();
+    const unpairedChars = new Set();
 
-    // Count up the instances of each character in the word, keeping track of
-    // characters that appear an odd number of times
-    for (let i = 0; i < chars.length; i++) {
-        const char = chars[i];
-
-        if (oddChars.has(char)) {
-            oddChars.delete(char);
+    // Walk through each character in the word and track the characters that
+    // don't have a mate
+    for (const char of word) {
+        if (unpairedChars.has(char)) {
+            unpairedChars.delete(char);
         } else {
-            oddChars.add(char);
+            unpairedChars.add(char);
         }
     }
 
-    // If the word has an even number of characters, no character may appear an
-    // odd number of times. If the word has an odd number of characters, there
-    // may be only one character that appears an odd number of times.
-    if (
-        (isOddWordLength && oddChars.size > 1) ||
-        (!isOddWordLength && oddChars.size)
-    ) {
-        return false;
-    }
-
-    return true;
+    // A palendrome must have no more than one unpaired character
+    return unpairedChars.size <= 1;
 };
