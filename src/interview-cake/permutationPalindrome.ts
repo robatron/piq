@@ -18,21 +18,19 @@ fully understand the question before starting. Jumping in with a flawed
 understanding of the problem doesn't look good in an interview.
 */
 export default (word: string): boolean => {
+    const isOddWordLength = Boolean(word.length % 2);
     const chars = word.split('');
-    const isCharOdd: { [key: string]: boolean } = {};
-    let oddsCount = 0;
+    const oddChars = new Set();
 
     // Count up the instances of each character in the word, keeping track of
     // characters that appear an odd number of times
     for (let i = 0; i < chars.length; i++) {
         const char = chars[i];
 
-        if (isCharOdd[char]) {
-            isCharOdd[char] = false;
-            oddsCount = isCharOdd[char] ? oddsCount + 1 : oddsCount - 1;
+        if (oddChars.has(char)) {
+            oddChars.delete(char);
         } else {
-            isCharOdd[char] = true;
-            oddsCount++;
+            oddChars.add(char);
         }
     }
 
@@ -40,8 +38,8 @@ export default (word: string): boolean => {
     // odd number of times. If the word has an odd number of characters, there
     // may be only one character that appears an odd number of times.
     if (
-        (chars.length % 2 === 0 && oddsCount > 0) ||
-        (chars.length % 2 !== 0 && oddsCount > 1)
+        (isOddWordLength && oddChars.size > 1) ||
+        (!isOddWordLength && oddChars.size)
     ) {
         return false;
     }
