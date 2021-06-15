@@ -34,7 +34,7 @@ export class LinkedListNode<Type> {
 // To "delete" this node, we just need to copy the `value` and `next` ref from
 // the next node and delete it. (We don't actually have to delete it; It will be
 // automatically garbage collected.)
-export const deleteNode = (node: LinkedListNode<T>): void => {
+export const deleteNode = <T>(node: LinkedListNode<T>): void => {
     const next = node.next;
 
     if (next) {
