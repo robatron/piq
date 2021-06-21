@@ -13,7 +13,9 @@ integer that is >= floor and <= ceiling.
  * the original list and choose a random spot for it in a new empty list that
  * hasn't already been filled. This is higher in both time and space complexity
  * because of the nested loop required to find the next empty spot in the sorted
- * list, and because there is a second list.
+ * list, and because there is a second list. O(n^2) time, O(n) space.
+ *
+ * Time: O(n^2), space: O(n)
  */
 export const shuffle = (list: unknown[]): unknown[] => {
     const sortedList: unknown[] = new Array(list.length);
@@ -36,7 +38,8 @@ export const shuffle = (list: unknown[]): unknown[] => {
 /**
  * Uniformly shuffle a list in place. Walk through every slot starting from the
  * beginning and choose a random item from the rest of the list to fill it. Swap
- * the chosen item with the existing item in the current slot.
+ * the chosen item with the existing item in the current slot. A.k.a.
+ * Fisher-Yates shuffle. O(n) time, O(1) space.
  */
 export const shuffleInPlace = (list: unknown[]): void => {
     for (let i = 0; i < list.length; i++) {
