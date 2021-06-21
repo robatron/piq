@@ -1,24 +1,72 @@
-export const getMaxProfit = (stockPrices: number[]): number => {
-    let maxProfit;
+/*
+Writing programming interview questions hasn't made me rich yet... so I might
+give up and start trading Apple stocks all day instead.
 
-    stockPrices.forEach((curStockPrice, t) => {
-        let maxPotentialProfit;
+First, I wanna know how much money I could have made yesterday if I'd been
+trading Apple stocks all day.
 
+So I grabbed Apple's stock prices from yesterday and put them in an array called
+stockPrices, where:
+
+- The indices are the time (in minutes) past trade opening time, which was
+  9:30am local time.
+- The values are the price (in US dollars) of one share of Apple stock at that
+  time.
+
+So if the stock cost $500 at 10:30am, that means stockPrices[60] =
+500.
+
+Write an efficient function that takes stockPrices and returns the best profit I
+could have made from one purchase and one sale of one share of Apple stock
+yesterday.
+
+For example:
+
+    const stockPrices = [10, 7, 5, 8, 11, 9];
+    getMaxProfit(stockPrices); // Returns 6 (buying for $5 and selling for $11)
+
+No "shorting" — you need to buy before you can sell. Also, you can't buy and
+sell in the same time step—at least 1 minute has to pass.
+*/
+
+// Compare every price to all prices after. O(n-1 + n-2 + n-3 ...) = O(n^2)
+export const appleStocksNaive = (stockPrices: number[]): number => {
+    if (stockPrices.length < 2) {
+        throw new Error('Need at least two stock prices');
+    }
+
+    let maxProfit = -Infinity;
+
+    for (let t = 0; t < stockPrices.length; t++) {
         for (let i = t + 1; i < stockPrices.length; i++) {
-            const potentialProfit = stockPrices[i] - curStockPrice;
+            const potentialProfit = stockPrices[i] - stockPrices[t];
 
-            if (
-                maxPotentialProfit === undefined ||
-                potentialProfit > maxPotentialProfit
-            ) {
-                maxPotentialProfit = potentialProfit;
+            if (potentialProfit > maxProfit) {
+                maxProfit = potentialProfit;
             }
         }
+    }
 
-        if (maxProfit === undefined || maxPotentialProfit > maxProfit) {
-            maxProfit = maxPotentialProfit;
-        }
-    });
+    return maxProfit;
+};
+
+// Use a greedy algorithm to track the minimum price so far, and the max profit
+// so far. O(n) time.
+export default (stockPrices: number[]): number => {
+    if (stockPrices.length < 2) {
+        throw new Error('Need at least two stock prices');
+    }
+
+    let minPrice = stockPrices[0];
+    let maxProfit = stockPrices[1] - stockPrices[0];
+
+    for (let t = 1; t < stockPrices.length; t++) {
+        const curPrice = stockPrices[t];
+        const curProfit = curPrice - minPrice;
+
+        maxProfit = Math.max(curProfit, maxProfit);
+        minPrice = Math.min(curPrice, minPrice);
+    }
 
     return maxProfit;
 };
