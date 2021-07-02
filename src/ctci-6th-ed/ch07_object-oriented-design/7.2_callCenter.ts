@@ -57,7 +57,7 @@ class Employee {
     /**
      * Advance time by one tick for this employee and all of their reports
      */
-    advanceTime(): void {}
+    // advanceTime(): void {}
 
     /**
      * Ask this employee to choose and return report to assign a call to. Find
