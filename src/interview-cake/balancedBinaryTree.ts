@@ -26,33 +26,65 @@ Here's a sample binary tree node class:
     }
 */
 
-class BinTreeNode<T> {
+export class BinTreeNode<T> {
     value: T;
     left: BinTreeNode<T>;
     right: BinTreeNode<T>;
+    level = 0;
 
-    constructor(value: T) {
+    constructor(value: T, left?: BinTreeNode<T>, right?: BinTreeNode<T>) {
         this.value = value;
+        // this.addLeft(left);
+        // this.addRight(right);
     }
 
     addLeft(value: T) {
         this.left = new BinTreeNode<T>(value);
+        this.left.level = this.level + 1;
         return this.left;
     }
 
     addRight(value: T) {
         this.right = new BinTreeNode<T>(value);
+        this.right.level = this.level + 1;
         return this.right;
     }
 }
+
+export const cn = (
+    v: number | string = null,
+    l: BinTreeNode = null,
+    r: BinTreeNode = null,
+): BinTreeNode => new BinTreeNode(v, l, r);
 
 // Traverse the tree with DFS, track the depth of the deepest and shallowest
 // leaf nodes, diff them, and return if it's <= 1
 export default <T>(root: BinTreeNode<T>): boolean => {
     const shallowestLeafDepth = 0;
     const deepestLeafDepth = 0;
+    const stack: BinTreeNode<T>[] = [root];
 
-    const stack: BinTreeNode[] = [root];
+    while (stack.length) {
+        const curNode = stack.pop();
 
-    return false;
+        // Is this a leaf node?
+        if (!curNode.left && !curNode.right) {
+            Math.min(shallowestLeafDepth, curNode.level);
+            Math.max(deepestLeafDepth, curNode.level);
+
+            if (deepestLeafDepth - shallowestLeafDepth > 1) {
+                return false;
+            }
+        }
+
+        if (curNode.left) {
+            stack.push(curNode.left);
+        }
+
+        if (curNode.right) {
+            stack.push(curNode.right);
+        }
+    }
+
+    return deepestLeafDepth - shallowestLeafDepth <= 1;
 };
