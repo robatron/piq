@@ -1,12 +1,46 @@
-import balancedBinaryTree, { BinTreeNode } from '../balancedBinaryTree';
+import balancedBinaryTree, { cn } from '../balancedBinaryTree';
 
-// prettier-ignore
 it('returns true if a binary tree is "superbalanced"', () => {
-    const root = new BinTreeNode<string>('root');
-        const l = root.addLeft('l');
-            const ll = l.addLeft('ll');
-            const lr = l.addRight('lr');
-        const r = root.addRight('r');
+    // prettier-ignore
+    const root0diff = cn(
+        'root',
+        cn('ll',
+            cn('lll'),
+            cn('llr')
+        ),
+        cn('lr',
+            cn('lrl'),
+            cn('lrr')
+        ),
+    );
 
-    expect(balancedBinaryTree(root)).toBe(true);
+    // prettier-ignore
+    const root1diff = cn(
+        'root',
+        cn('ll',
+            cn('lll'),
+            cn('llr')
+        ),
+        cn('lr'),
+    );
+
+    expect(balancedBinaryTree(root0diff)).toBe(true);
+    expect(balancedBinaryTree(root1diff)).toBe(true);
+});
+
+it('returns false if a binary tree is not "superbalanced"', () => {
+    // prettier-ignore
+    const root = cn(
+        'root',
+        cn('ll',
+            cn('lll',
+                cn('llll'),
+                cn('lllr')
+            ),
+            cn('llr')
+        ),
+        cn('lr'),
+    );
+
+    expect(balancedBinaryTree(root)).toBe(false);
 });
