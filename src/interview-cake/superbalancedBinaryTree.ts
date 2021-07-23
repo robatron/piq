@@ -1,3 +1,4 @@
+import BinTreeNode from './lib/BinTreeNode';
 /*
 Write a function to see if a binary tree is "superbalanced" (a new tree property
 we just made up).
@@ -5,48 +6,8 @@ we just made up).
 A tree is "superbalanced" if the difference between the depths of any two leaf
 nodes is no greater than one.
 
-Here's a sample binary tree node class:
-
-    class BinaryTreeNode {
-        constructor(value) {
-            this.value = value;
-            this.left = null;
-            this.right = null;
-        }
-
-        insertLeft(value) {
-            this.left = new BinaryTreeNode(value);
-            return this.left;
-        }
-
-        insertRight(value) {
-            this.right = new BinaryTreeNode(value);
-            return this.right;
-        }
-    }
-
 https://www.interviewcake.com/question/javascript/balanced-binary-tree?course=fc1&section=trees-graphs
 */
-
-// Simple binary tree node class
-export class BinTreeNode<T> {
-    value: T;
-    left: BinTreeNode<T>;
-    right: BinTreeNode<T>;
-
-    constructor(value: T, left?: BinTreeNode<T>, right?: BinTreeNode<T>) {
-        this.value = value;
-        this.left = left;
-        this.right = right;
-    }
-}
-
-// Shorthand for creating a binary tree with BinTreeNodes
-export const cn = <T>(
-    v?: T,
-    l?: BinTreeNode<T>,
-    r?: BinTreeNode<T>,
-): BinTreeNode<T> => new BinTreeNode<T>(v, l, r);
 
 // Find the min and max leaf depths using recursive DFS (part of deprecated
 // approach)

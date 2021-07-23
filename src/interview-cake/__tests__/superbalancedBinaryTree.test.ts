@@ -1,4 +1,5 @@
-import isBinTreeSuperbalanced, { cn } from '../superbalancedBinaryTree';
+import isBinTreeSuperbalanced from '../superbalancedBinaryTree';
+import { cn } from '../lib/BinTreeNode';
 
 describe('balancedBinaryTree', () => {
     it('returns true if a binary tree is "superbalanced"', () => {
