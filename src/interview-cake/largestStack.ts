@@ -9,24 +9,7 @@ item.
 
 Your stacks will contain only integers.
 */
-export class Stack<T> {
-    items: T[] = [];
-
-    // Push a new item onto the stack
-    push(item: T): void {
-        this.items.push(item);
-    }
-
-    // Remove and return the last item
-    pop(): T {
-        return this.items.length ? this.items.pop() : null;
-    }
-
-    // Return the last item without removing it
-    peek(): T {
-        return this.items.length ? this.items[this.items.length - 1] : null;
-    }
-}
+import Stack from './lib/Stack';
 
 export class MaxStack<T> extends Stack<T> {
     maxItems: Stack<T> = new Stack<T>();
