@@ -3,8 +3,9 @@ export default class Stack<T> {
     items: T[] = [];
 
     // Push a new item onto the stack
-    push(item: T): void {
+    push(item: T): this {
         this.items.push(item);
+        return this;
     }
 
     // Remove and return the last item
