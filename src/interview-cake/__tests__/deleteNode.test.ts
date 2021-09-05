@@ -1,4 +1,5 @@
-import { deleteNode, LinkedListNode } from '../deleteNode';
+import LinkedListNode from '../lib/LinkedListNode';
+import { deleteNode } from '../deleteNode';
 
 describe('deleteNode', () => {
     it('deletes a node from a singly linked list given only a reference to the node', () => {

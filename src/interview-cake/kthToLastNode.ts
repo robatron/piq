@@ -30,16 +30,7 @@ Returns the node with value "Devil's Food" (the 2nd to last node)
 
 https://www.interviewcake.com/question/javascript/kth-to-last-node-in-singly-linked-list
 */
-
-export class LinkedListNode<T> {
-    value: T;
-    next: LinkedListNode<T>;
-
-    constructor(v: T, n?: LinkedListNode<T>) {
-        this.value = v;
-        this.next = n;
-    }
-}
+import LinkedListNode from './lib/LinkedListNode';
 
 export default <T>(k: number, head: LinkedListNode<T>): LinkedListNode<T> => {
     let kthToLastNode: LinkedListNode<T>;

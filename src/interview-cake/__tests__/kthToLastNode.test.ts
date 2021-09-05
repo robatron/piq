@@ -1,4 +1,5 @@
-import kthToLastNode, { LinkedListNode } from '../kthToLastNode';
+import LinkedListNode from '../lib/LinkedListNode';
+import kthToLastNode from '../kthToLastNode';
 
 describe('kthToLastNode', () => {
     const a = new LinkedListNode<string>('Angel Food');
