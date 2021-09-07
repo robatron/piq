@@ -1,4 +1,4 @@
-import LinkedListNode, { valsToLinkedListNodes } from '../lib/LinkedListNode';
+import LinkedListNode, { arrayToLinkedList } from '../lib/LinkedListNode';
 import { containsCycle } from '../linkedListCycle';
 
 describe('containsCycle', () => {
@@ -8,7 +8,7 @@ describe('containsCycle', () => {
     assertEquals(containsCycle(nodes[0]), false, desc);
     */
     it('returns false for linked lists w/o cycles', () => {
-        const nodes = valsToLinkedListNodes([1, 2, 3, 4]);
+        const nodes = arrayToLinkedList([1, 2, 3, 4]);
         expect(containsCycle(nodes[0])).toBe(false);
     });
 
@@ -19,7 +19,7 @@ describe('containsCycle', () => {
     assertEquals(containsCycle(nodes[0]), true, desc);
     */
     it('returns true if linked list loops back to beginning', () => {
-        const nodes = valsToLinkedListNodes([1, 2, 3, 4]);
+        const nodes = arrayToLinkedList([1, 2, 3, 4]);
         nodes[3].next = nodes[0];
         expect(containsCycle(nodes[0])).toBe(true);
     });
@@ -31,7 +31,7 @@ describe('containsCycle', () => {
     assertEquals(containsCycle(nodes[0]), true, desc);
     */
     it('returns true if linked list loops to middle', () => {
-        const nodes = valsToLinkedListNodes([1, 2, 3, 4, 5]);
+        const nodes = arrayToLinkedList([1, 2, 3, 4, 5]);
         nodes[4].next = nodes[2];
         expect(containsCycle(nodes[0])).toBe(true);
     });
@@ -43,7 +43,7 @@ describe('containsCycle', () => {
     assertEquals(containsCycle(nodes[0]), true, desc);
     */
     it('returns true if linked list has double link at end', () => {
-        const nodes = valsToLinkedListNodes([1, 2, 3, 4, 5]);
+        const nodes = arrayToLinkedList([1, 2, 3, 4, 5]);
         nodes[4].next = nodes[3];
         expect(containsCycle(nodes[0])).toBe(true);
     });
