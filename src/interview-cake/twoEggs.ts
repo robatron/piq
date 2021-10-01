@@ -43,19 +43,22 @@ Reference
 - [Triangular roots](https://en.wikipedia.org/wiki/Triangular_number#Triangular_roots_and_tests_for_triangular_numbers)
 */
 
-// Which of the two eggs are safe?
-export enum SafeEggs {
-    none,
-    last,
-    both,
+// Record of what happened to an egg
+export class EggFate {
+    floorsVisited: number[];
+    isBroken: boolean;
+
+    constructor(fv?: number[], isBroken?: boolean) {
+        this.floorsVisited = fv || [];
+        this.isBroken = isBroken || false;
+    }
 }
 
-// Result of a two-egg drop test, the minimum number of required drops, the
-// floors from which the eggs were dropped, and the eggs that survived, if any
+// Result of a two-egg drop test, the minimum number of required drops, and what
+// floors the two eggs were dropped from, and if they survived
 export type TwoEggDropResult = {
     dropCount: number;
-    dropFloors: number[][];
-    safeEggs: SafeEggs;
+    eggFates: EggFate[];
 };
 
 // Using two eggs, find the fewest number of drops you'd need to find the
@@ -72,16 +75,6 @@ export const getMin2EggDropCount = (
     // Verify the highest safe floor is one of the floors
     if (!(1 <= maxSafeFloor && maxSafeFloor <= floorCount)) {
         throw new Error(`Max safe floor must be from 1 to ${floorCount}`);
-    }
-
-    // If there's only one floor, it's also the highest safe floor, so we don't
-    // have to do anything, and both eggs are safe
-    if (floorCount === 1) {
-        return {
-            dropCount: 0,
-            dropFloors: [[], []],
-            safeEggs: SafeEggs.both,
-        };
     }
 
     // What floor should we start dropping the first egg at? Since we'll be
@@ -101,13 +94,16 @@ export const getMin2EggDropCount = (
         // Total number of times we've dropped eggs
         dropCount: 0,
 
-        // Floors we've dropped both eggs from. (Not required for main
-        // algorithm, but interesting info anyway.)
-        dropFloors: [[], []],
-
-        // Both eggs start unbroken
-        safeEggs: SafeEggs.both,
+        // Log of what happened to the eggs during the drop test, i.e., what
+        // floors were they dropped from, and did they survive?
+        eggFates: [new EggFate(), new EggFate()],
     };
+
+    // If there's only one floor, it's also the highest safe floor, so we don't
+    // have to do anything, and both eggs are safe
+    if (floorCount === 1) {
+        return result;
+    }
 
     // Start by dropping the first egg in an optimal skipping pattern until it
     // breaks or we can't drop it anymore. Next, if we can still drop the last
@@ -138,7 +134,7 @@ export const getMin2EggDropCount = (
 
             // Actually drop the current egg
             result.dropCount++;
-            result.dropFloors[egg].push(nextDropFloor);
+            result.eggFates[egg].floorsVisited.push(nextDropFloor);
 
             // OMLETTE CONDITION: Can we save the any of the eggs? If an egg
             // survives the floor just below the highest floor, we know the
@@ -146,7 +142,7 @@ export const getMin2EggDropCount = (
             // the last egg, it means the first has already broken.
             if (nextDropFloor === floorCount - 1) {
                 if (isLastEgg) {
-                    result.safeEggs = SafeEggs.last;
+                    result.eggFates[0].isBroken = true;
                 }
                 return result;
             }
@@ -155,7 +151,7 @@ export const getMin2EggDropCount = (
             // possibility of being safe unless the last one breaks after
             if (nextDropFloor > maxSafeFloor) {
                 firstEggBreakFloor = isFirstEgg && nextDropFloor;
-                result.safeEggs = isFirstEgg ? SafeEggs.last : SafeEggs.none;
+                result.eggFates[egg].isBroken = true;
                 break;
             }
 
