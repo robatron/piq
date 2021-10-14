@@ -1,11 +1,12 @@
 {
     "compilerOptions": {
+        "resolveJsonModule": true,
         "esModuleInterop": true,
         "moduleResolution": "node",
         "target": "ES2019",
 
         // Don't actually emit anything; We're just using TypeScript in tests.
-        "noEmit": true,
+        "noEmit": true
     },
     "include": ["src/**/*.ts"],
     "exclude": ["node_modules"]
