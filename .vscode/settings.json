@@ -1,4 +1,9 @@
 {
+    "editor.formatOnSave": true,
+    "editor.formatOnSaveMode": "file",
+    "peacock.color": "#59e392",
+    "rewrap.reformat": true,
+    "rewrap.wrappingColumn": 80,
     "workbench.colorCustomizations": {
         "activityBar.activeBackground": "#85eaaf",
         "activityBar.activeBorder": "#a677e8",
@@ -7,17 +12,18 @@
         "activityBar.inactiveForeground": "#15202b99",
         "activityBarBadge.background": "#a677e8",
         "activityBarBadge.foreground": "#15202b",
+        "editorGroup.border": "#85eaaf",
+        "panel.border": "#85eaaf",
+        "sash.hoverBorder": "#85eaaf",
+        "sideBar.border": "#85eaaf",
         "statusBar.background": "#59e392",
         "statusBar.foreground": "#15202b",
         "statusBarItem.hoverBackground": "#2ddc75",
+        "statusBarItem.remoteBackground": "#59e392",
+        "statusBarItem.remoteForeground": "#15202b",
         "titleBar.activeBackground": "#59e392",
         "titleBar.activeForeground": "#15202b",
         "titleBar.inactiveBackground": "#59e39299",
         "titleBar.inactiveForeground": "#15202b99"
-    },
-    "peacock.color": "#59e392",
-    "editor.formatOnSave": true,
-    "editor.formatOnSaveMode": "file",
-    "rewrap.wrappingColumn": 80,
-    "rewrap.reformat": true
+    }
 }
