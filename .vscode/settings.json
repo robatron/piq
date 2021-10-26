@@ -1,6 +1,9 @@
 {
+    "editor.detectIndentation": false,
     "editor.formatOnSave": true,
     "editor.formatOnSaveMode": "file",
+    "editor.insertSpaces": true,
+    "editor.tabSize": 4,
     "peacock.color": "#59e392",
     "rewrap.reformat": true,
     "rewrap.wrappingColumn": 80,
