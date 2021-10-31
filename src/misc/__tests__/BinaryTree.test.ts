@@ -180,4 +180,50 @@ describe('BinaryTree', () => {
             expect(bt3.getTreeSeq()).toStrictEqual(btSeqRmRC);
         });
     });
+
+    describe('traversals', () => {
+        it('returns a level-order traversal', () => {
+            const bt = new BinaryTree(btNode.root);
+            expect(bt.getTraversalLevelOrder()).toStrictEqual(btSeq);
+        });
+
+        it('returns a in-order traversal', () => {
+            const bt = new BinaryTree(btNode.root);
+            expect(bt.getTraversalInOrder()).toStrictEqual([
+                'left.left',
+                'left',
+                'left.right',
+                'root',
+                'right.left',
+                'right',
+                'right.right',
+            ]);
+        });
+
+        it('returns a pre-order traversal', () => {
+            const bt = new BinaryTree(btNode.root);
+            expect(bt.getTraversalPreOrder()).toStrictEqual([
+                'root',
+                'left',
+                'left.left',
+                'left.right',
+                'right',
+                'right.left',
+                'right.right',
+            ]);
+        });
+
+        it('returns a post-order traversal', () => {
+            const bt = new BinaryTree(btNode.root);
+            expect(bt.getTraversalPostOrder()).toStrictEqual([
+                'left.left',
+                'left.right',
+                'left',
+                'right.left',
+                'right.right',
+                'right',
+                'root',
+            ]);
+        });
+    });
 });

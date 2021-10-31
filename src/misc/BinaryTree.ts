@@ -77,6 +77,8 @@ class BinaryTree {
         }
     }
 
+    // Linked representation ===================================================
+
     // Return the tree directly in linked representation
     getTreeLinked = (): BinTreeNode<unknown> => this.root;
 
@@ -99,6 +101,8 @@ class BinaryTree {
             });
         }
     };
+
+    // Sequence representation =================================================
 
     // Return the tree in sequential representation by traversing the tree
     // breadth-first and tracking the node values
@@ -166,6 +170,41 @@ class BinaryTree {
             }
         }
     };
+
+    // Traversals ==============================================================
+
+    // Return a "level order" breadth-first traversal
+    getTraversalLevelOrder = (): BinTreeSeqArr => this.getTreeSeq();
+
+    // Return an "in-order" depth-first traversal
+    getTraversalInOrder = (root: BinTreeNode = this.root): BinTreeSeqArr =>
+        root
+            ? [
+                  ...this.getTraversalInOrder(root.left),
+                  root.val,
+                  ...this.getTraversalInOrder(root.right),
+              ]
+            : [];
+
+    // Return an "pre-order" depth-first traversal
+    getTraversalPreOrder = (root: BinTreeNode = this.root): BinTreeSeqArr =>
+        root
+            ? [
+                  root.val,
+                  ...this.getTraversalPreOrder(root.left),
+                  ...this.getTraversalPreOrder(root.right),
+              ]
+            : [];
+
+    // Return an "post-order" depth-first traversal
+    getTraversalPostOrder = (root: BinTreeNode = this.root): BinTreeSeqArr =>
+        root
+            ? [
+                  ...this.getTraversalPostOrder(root.left),
+                  ...this.getTraversalPostOrder(root.right),
+                  root.val,
+              ]
+            : [];
 }
 
 export default BinaryTree;
