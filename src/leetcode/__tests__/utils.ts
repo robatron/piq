@@ -1,49 +1,31 @@
-function createTests(
-    ios: [number, number][],
-    fn: (...args: unknown[]) => unknown,
-    opts?: { maxInputDisplayLen?: number; testNamePrefix?: string },
-): void;
-
-function createTests(
-    ios: [number[], number][],
-    fn: (...args: unknown[]) => unknown,
-    opts?: { maxInputDisplayLen?: number; testNamePrefix?: string },
-): void;
-
-function createTests(
-    ios: [string, number][],
-    fn: (...args: unknown[]) => unknown,
-    opts?: { maxInputDisplayLen?: number; testNamePrefix?: string },
-): void;
+type TestFn = (...args: unknown[]) => unknown;
+type Opts = {
+    maxInputDisplayLen?: number;
+    spreadInput?: boolean;
+    testNamePrefix?: string;
+};
+type InOut = [number | number[] | string | string[], number | string];
 
 /**
  * Create tests for the specified function with the specified array of inputs
  * and expected outputs
  */
 function createTests(
-    ios: [number | number[] | string, number][],
-    fn: (...args: unknown[]) => unknown,
+    ios: InOut[],
+    fn: TestFn,
     {
         maxInputDisplayLen = 10,
+        spreadInput = false,
         testNamePrefix = '',
-    }: { maxInputDisplayLen?: number; testNamePrefix?: string } = {},
+    }: Opts = {},
 ): void {
-    ios.forEach(([input, output]: [number | number[] | string, number]) => {
+    ios.forEach(([input, output]: InOut) => {
         const prefix: string = testNamePrefix ? testNamePrefix + ' ' : '';
         let displayInput: string;
 
-        // Treat number inputs as strings for simplicity
-        if (typeof input === 'number') {
-            const inputStr = (input as number).toString();
-            displayInput =
-                inputStr.length > maxInputDisplayLen
-                    ? inputStr.slice(0, maxInputDisplayLen + 1) + '...'
-                    : inputStr;
-        }
-
-        // Construct display input for number arrays
-        else if (Array.isArray(input)) {
-            let displayArray: Array<number> = input;
+        // Contruct display input for arrays
+        if (Array.isArray(input)) {
+            let displayArray: number[] | string[] = input;
             let itemSuffix = '';
 
             if (input.length > maxInputDisplayLen) {
@@ -54,18 +36,27 @@ function createTests(
             displayInput = `[${displayArray.join(',')}${itemSuffix}]`;
         }
 
-        // Construct display input for strings
-        else if (typeof input === 'string') {
-            displayInput =
-                input.length > maxInputDisplayLen
-                    ? input.slice(0, maxInputDisplayLen + 1) + '...'
+        // Construct display input for strings. Treat number inputs as strings
+        // also for simplicity
+        else if (typeof input === 'string' || typeof input === 'number') {
+            let inputStr =
+                typeof input === 'number'
+                    ? (input as number).toString()
                     : input;
-            displayInput = `'${displayInput}'`;
+            inputStr =
+                inputStr.length > maxInputDisplayLen
+                    ? inputStr.slice(0, maxInputDisplayLen + 1) + '…'
+                    : inputStr;
+            displayInput =
+                typeof input === 'string' ? `'${inputStr}'` : inputStr;
         }
 
         // Create the actual test
         test(`${prefix}${displayInput} => ${output}`, () => {
-            expect(fn(input)).toBe(output);
+            const actual: unknown = spreadInput
+                ? fn(...(input as number[] | string[]))
+                : fn(input);
+            expect(actual).toBe(output);
         });
     });
 }
