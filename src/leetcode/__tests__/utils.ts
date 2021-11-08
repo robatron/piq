@@ -1,4 +1,10 @@
 function createTests(
+    ios: [number, number][],
+    fn: (...args: unknown[]) => unknown,
+    opts?: { maxInputDisplayLen?: number; testNamePrefix?: string },
+): void;
+
+function createTests(
     ios: [number[], number][],
     fn: (...args: unknown[]) => unknown,
     opts?: { maxInputDisplayLen?: number; testNamePrefix?: string },
@@ -10,25 +16,29 @@ function createTests(
     opts?: { maxInputDisplayLen?: number; testNamePrefix?: string },
 ): void;
 
+/**
+ * Create tests for the specified function with the specified array of inputs
+ * and expected outputs
+ */
 function createTests(
-    ios: [string | number[], number][],
+    ios: [number | number[] | string, number][],
     fn: (...args: unknown[]) => unknown,
     {
         maxInputDisplayLen = 10,
         testNamePrefix = '',
     }: { maxInputDisplayLen?: number; testNamePrefix?: string } = {},
 ): void {
-    ios.forEach(([input, output]: [string | number[], number]) => {
+    ios.forEach(([input, output]: [number | number[] | string, number]) => {
         const prefix: string = testNamePrefix ? testNamePrefix + ' ' : '';
         let displayInput: string;
 
-        // Construct display input for strings
-        if (typeof input === 'string') {
+        // Treat number inputs as strings for simplicity
+        if (typeof input === 'number') {
+            const inputStr = (input as number).toString();
             displayInput =
-                input.length > maxInputDisplayLen
-                    ? input.slice(0, maxInputDisplayLen + 1) + '...'
-                    : input;
-            displayInput = `'${displayInput}'`;
+                inputStr.length > maxInputDisplayLen
+                    ? inputStr.slice(0, maxInputDisplayLen + 1) + '...'
+                    : inputStr;
         }
 
         // Construct display input for number arrays
@@ -42,6 +52,15 @@ function createTests(
             }
 
             displayInput = `[${displayArray.join(',')}${itemSuffix}]`;
+        }
+
+        // Construct display input for strings
+        else if (typeof input === 'string') {
+            displayInput =
+                input.length > maxInputDisplayLen
+                    ? input.slice(0, maxInputDisplayLen + 1) + '...'
+                    : input;
+            displayInput = `'${displayInput}'`;
         }
 
         // Create the actual test
