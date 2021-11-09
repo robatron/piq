@@ -27,7 +27,7 @@
 // @lc code=start
 const addBinary = (a: string, b: string): string => {
     const maxLen: number = Math.max(a.length, b.length);
-    const ans: number[] = [0];
+    const ans: boolean[] = [false];
 
     for (let place = maxLen - 1; place >= 0; place--) {
         const topIdx = ans.length - 1;
@@ -35,18 +35,25 @@ const addBinary = (a: string, b: string): string => {
         const p1 = place - (maxLen - a.length);
         const p2 = place - (maxLen - b.length);
 
-        const d1 = p1 >= 0 ? Number(a[p1]) : 0;
-        const d2 = p2 >= 0 ? Number(b[p2]) : 0;
+        const dp: boolean = ans[topIdx];
+        const d1: boolean = p1 >= 0 ? a[p1] === '1' : false;
+        const d2: boolean = p2 >= 0 ? b[p2] === '1' : false;
 
-        const sum: number = d1 + d2 + ans[topIdx];
-        const carry: number = sum > 1 ? 1 : 0;
-        const remainder: number = sum % 2;
+        const isCarry: boolean = (dp && (d1 || d2)) || (d1 && d2);
+        const isRmndr: boolean =
+            (dp && d1 && d2) ||
+            (dp && !d1 && !d2) ||
+            (!dp && d1 && !d2) ||
+            (!dp && !d1 && d2);
 
-        ans[topIdx] = remainder;
-        if (place || carry) ans.push(carry);
+        ans[topIdx] = isRmndr;
+        if (place || isCarry) ans.push(isCarry);
     }
 
-    return ans.reverse().join('');
+    return ans
+        .reverse()
+        .map((d) => Number(d))
+        .join('');
 };
 // @lc code=end
 
