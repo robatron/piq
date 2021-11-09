@@ -1,5 +1,5 @@
 import CardDeckBlackjack from '../CardDeckBlackjack';
-import Card, { ALL_CARDS, CardSuit, FACE_CARDS, NUMBER_CARDS } from '../Card';
+import { ALL_CARDS } from '../Card';
 
 describe('BlackjackDeck', () => {
     describe('constructor', () => {
@@ -37,9 +37,8 @@ describe('BlackjackDeck', () => {
             let outerIdx = 0;
 
             ALL_CARDS.forEach((targetCard) => {
-                const actualIdxs: Array<number> = bjDeck.findAllIndexOf(
-                    targetCard,
-                );
+                const actualIdxs: Array<number> =
+                    bjDeck.findAllIndexOf(targetCard);
                 const expectIdxs: Array<number> = [];
 
                 for (let i = 0; i < deckCount; i++) {

@@ -64,4 +64,4 @@ const isPalindromeStringEd = (x: number): boolean => {
     return true;
 };
 
-export { isPalindrome };
+export { isPalindrome, isPalindromeStringEd };

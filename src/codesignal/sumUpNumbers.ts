@@ -27,3 +27,5 @@ const differentSquares = (matrix: number[][]): number => {
     // just the size of the squares set
     return squares.size;
 };
+
+export { differentSquares };

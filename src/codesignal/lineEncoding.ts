@@ -32,3 +32,5 @@ const lineEncoding = (s: string): string => {
 
     return encodedStr;
 };
+
+export { lineEncoding };

@@ -72,3 +72,5 @@ const spiralNumbers = (n: number): number[][] => {
 
     return matrix;
 };
+
+export { spiralNumbers };

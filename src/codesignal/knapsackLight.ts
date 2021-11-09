@@ -32,3 +32,5 @@ const knapsackRecursive = (
     // Can we make more by including or excluding the item?
     return Math.max(maxValIncl, maxValExcl);
 };
+
+export { knapsackLight };

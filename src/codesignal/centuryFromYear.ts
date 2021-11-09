@@ -1,6 +1,4 @@
-/*
-Return the century number from a year
-*/
+/** Return the century number from a year */
 export const centuryFromYear = (year: number): number => {
     // We're defining year 0 as part of the 1st century
     if (year === 0) {

@@ -32,8 +32,6 @@ https://www.interviewcake.com/question/javascript/reverse-words
 */
 
 export default (msg: string[]): void => {
-    const endWordIdxs: number[] = [];
-
     // Reverse entire string. This means each word will also be reversed which
     // we will take care of in the next step.
     // O( n / 2 ) = O( (1/2) * n) = O(n)

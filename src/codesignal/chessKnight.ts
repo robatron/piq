@@ -49,3 +49,5 @@ const chessKnight = (cell: string): number => {
         isValidCell([knightCol + relCol, knightRow + relRow]),
     ).length;
 };
+
+export { chessKnight };

@@ -20,6 +20,8 @@
  *  - A CallCenter has many directors
  *  - A director has many managers and/or respondents
  *  - A manager has many respondents
+ *
+ * TODO: Finish this!
  */
 
 // Call center "call"
@@ -92,22 +94,24 @@ class Employee {
     }
 }
 
-class CallCenter {
-    // Employees at the call center are arranged as a tree with the root
-    // employee being the highest-level boss
-    private topDog: Employee;
+// class CallCenter {
+//     // Employees at the call center are arranged as a tree with the root
+//     // employee being the highest-level boss
+//     private topDog: Employee;
 
-    constructor(rootEmployee: Employee) {
-        this.topDog = rootEmployee;
-    }
+//     constructor(rootEmployee: Employee) {
+//         this.topDog = rootEmployee;
+//     }
 
-    // Assign a call to the first available, lowest-level employee
-    dispachCall() {
-        const assignee = this.topDog.chooseAssignee();
-    }
+//     // Assign a call to the first available, lowest-level employee
+//     dispachCall() {
+//         const assignee = this.topDog.chooseAssignee();
+//     }
 
-    // Advance the world time by one tick
-    advanceTime() {
-        this.topDog.advanceTime();
-    }
-}
+//     // Advance the world time by one tick
+//     advanceTime() {
+//         this.topDog.advanceTime();
+//     }
+// }
+
+export { Employee };

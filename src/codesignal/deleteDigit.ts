@@ -38,3 +38,5 @@ const deleteDigitLame = (n: number): number => {
 
     return largest;
 };
+
+export { deleteDigit, deleteDigitLame };

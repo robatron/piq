@@ -5,3 +5,5 @@ const DIGITS = new Set(
 );
 
 const isDigit = (char: string): boolean => DIGITS.has(char);
+
+export { isDigit };

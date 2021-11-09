@@ -1,5 +1,3 @@
-import Stack from './lib/Stack';
-
 /*
 I like parentheticals (a lot).
 

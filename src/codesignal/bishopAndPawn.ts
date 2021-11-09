@@ -11,3 +11,5 @@ const bishopAndPawn = (bishop: string, pawn: string): boolean => {
     // The bishop can capture the pawn if it is a diagonal distance away!
     return xDist === yDist;
 };
+
+export { bishopAndPawn };

@@ -4,3 +4,5 @@ const longestWord = (text: string): string =>
         .reduce((longWord, word) =>
             word.length > longWord.length ? word : longWord,
         );
+
+export { longestWord };

@@ -97,3 +97,4 @@ const isBinTreeSuperbalanced = <T>(root: BinTreeNode<T>): boolean => {
 };
 
 export default isBinTreeSuperbalanced;
+export { getMinMaxLeafDepth };

@@ -1,4 +1,4 @@
-function stringsRearrangement(inputArray) {
+const stringsRearrangement = (inputArray: string[]): boolean => {
     const solution = [];
     let ret = false;
 
@@ -38,7 +38,9 @@ function stringsRearrangement(inputArray) {
     bt();
 
     return ret;
-}
+};
+
+export { stringsRearrangement };
 
 // -----
 
