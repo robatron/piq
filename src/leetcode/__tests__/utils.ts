@@ -3,8 +3,12 @@ type Opts = {
     maxInputDisplayLen?: number;
     spreadInput?: boolean;
     testNamePrefix?: string;
+    testExpectType?: string;
 };
-type InOut = [number | number[] | string | string[], number | string];
+type InOut = [
+    number | number[] | string | string[],
+    number | number[] | string,
+];
 
 /**
  * Create tests for the specified function with the specified array of inputs
@@ -17,6 +21,7 @@ function createTests(
         maxInputDisplayLen = 10,
         spreadInput = false,
         testNamePrefix = '',
+        testExpectType = 'toBe',
     }: Opts = {},
 ): void {
     ios.forEach(([input, output]: InOut) => {
@@ -56,7 +61,7 @@ function createTests(
             const actual: unknown = spreadInput
                 ? fn(...(input as number[] | string[]))
                 : fn(input);
-            expect(actual).toBe(output);
+            expect(actual)[testExpectType](output);
         });
     });
 }
