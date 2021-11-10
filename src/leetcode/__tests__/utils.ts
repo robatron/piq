@@ -5,10 +5,50 @@ type Opts = {
     testNamePrefix?: string;
     testExpectType?: string;
 };
-type InOut = [
-    number | number[] | string | string[],
-    number | number[] | string,
-];
+type InOut = [unknown, unknown];
+type DisplayData = number | string | unknown[];
+
+const CONTINUE_CHAR = '…';
+const ARROW_CHAR = '→';
+
+/** Create a display string of arbitrary data */
+function createDisplayString(data: DisplayData, maxDispLen = 10): string {
+    if (typeof data === 'string' || typeof data === 'number') {
+        const dataStr: string =
+            typeof data === 'number' ? data.toString() : data;
+        return dataStr.length > maxDispLen
+            ? dataStr.split('').slice(0, maxDispLen).join('') + CONTINUE_CHAR
+            : dataStr;
+    }
+
+    if (Array.isArray(data)) {
+        let displayArray: unknown[] = data;
+        let itemSuffix = '';
+
+        if (data.length > maxDispLen) {
+            displayArray = data.slice(0, maxDispLen);
+            itemSuffix = `, ${CONTINUE_CHAR}`;
+        }
+
+        return `[${displayArray.join(',')}${itemSuffix}]`;
+    }
+}
+
+/** Create a test name */
+function createTestName(
+    inputs: DisplayData | DisplayData[],
+    output: DisplayData,
+    maxDispLen = 10,
+): string {
+    const displayInputs: string | string[] = Array.isArray(inputs)
+        ? inputs.map((input: DisplayData) =>
+              createDisplayString(input, maxDispLen),
+          )
+        : createDisplayString(inputs, maxDispLen);
+    const displayOutput: string = createDisplayString(output, maxDispLen);
+
+    return `${displayInputs} ${ARROW_CHAR} ${displayOutput}`;
+}
 
 /**
  * Create tests for the specified function with the specified array of inputs
@@ -67,4 +107,10 @@ function createTests(
 }
 
 // eslint-disable-next-line jest/no-export
-export { createTests };
+export {
+    ARROW_CHAR,
+    CONTINUE_CHAR,
+    createDisplayString,
+    createTestName,
+    createTests,
+};
