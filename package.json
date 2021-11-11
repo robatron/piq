@@ -9,7 +9,7 @@
         "lint": "eslint 'src/**/*.{js,ts}'",
         "start": "npm run watch",
         "test": "jest --verbose",
-        "watch": "jest --watch"
+        "watch": "jest --watch --verbose"
     },
     "author": "Rob McGuire <robert.mcgui@gmail.com>",
     "license": "MIT",

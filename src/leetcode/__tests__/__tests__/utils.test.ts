@@ -18,7 +18,7 @@ describe('createDisplayString', () => {
 
         it("shortens a display string that's too long", () => {
             const actual: string = createDisplayString(data, 2);
-            const expctd = '12' + CONTINUE_CHAR;
+            const expctd = `12${CONTINUE_CHAR}`;
 
             expect(actual).toBe(expctd);
         });
@@ -29,14 +29,14 @@ describe('createDisplayString', () => {
 
         it('creates a display string', () => {
             const actual: string = createDisplayString(data, 3);
-            const expctd = data;
+            const expctd = `'${data}'`;
 
             expect(actual).toBe(expctd);
         });
 
         it("shortens a display string that's too long", () => {
             const actual: string = createDisplayString(data, 2);
-            const expctd = 'ab' + CONTINUE_CHAR;
+            const expctd = `'ab${CONTINUE_CHAR}'`;
 
             expect(actual).toBe(expctd);
         });
@@ -44,15 +44,17 @@ describe('createDisplayString', () => {
 
     describe('arrays', () => {
         [
-            [1, 2, 3],
-            ['a', 'b', 'c'],
+            [123, 456, 789],
+            ['abc', 'def', 'ghi'],
         ].forEach((arr) =>
             describe(typeof arr[0], () => {
-                const data: unknown[] = arr;
+                const data: number[] | string[] = arr;
 
                 it('creates a display string', () => {
                     const actual: string = createDisplayString(data, 3);
-                    const expctd = `[${data.toString()}]`;
+                    const expctd = `[${data
+                        .map((d) => (typeof d === 'string' ? `'${d}'` : d))
+                        .toString()}]`;
 
                     expect(actual).toBe(expctd);
                 });
@@ -60,8 +62,17 @@ describe('createDisplayString', () => {
                 it("shortens a display string that's too long", () => {
                     const actual: string = createDisplayString(data, 2);
                     const expctd = `[${data
-                        .slice(0, 2)
-                        .toString()}, ${CONTINUE_CHAR}]`;
+                        .map((d, i) => {
+                            if (i === data.length - 1) return CONTINUE_CHAR;
+                            const dStr: string =
+                                (typeof d === 'number'
+                                    ? d.toString()
+                                    : d
+                                ).slice(0, 2) + CONTINUE_CHAR;
+
+                            return typeof d === 'string' ? `'${dStr}'` : dStr;
+                        })
+                        .toString()}]`;
 
                     expect(actual).toBe(expctd);
                 });
@@ -75,16 +86,16 @@ describe('createTestName', () => {
         const input = '123';
         const output = '123';
         const actual: string = createTestName(input, output);
-        const expctd = `123 ${ARROW_CHAR} 123`;
+        const expctd = `'123' ${ARROW_CHAR} '123'`;
 
         expect(actual).toBe(expctd);
     });
 
-    it('creates a test name from multiple inputs', () => {
-        const inputs = [['123', '456'], 789];
+    it('creates a test name from multiple inputs of different types', () => {
+        const inputs: [string[], number] = [['123', '456'], 789];
         const output = '123';
         const actual: string = createTestName(inputs, output);
-        const expctd = `[123,456],789 ${ARROW_CHAR} 123`;
+        const expctd = `[['123','456'],789] ${ARROW_CHAR} '123'`;
 
         expect(actual).toBe(expctd);
     });

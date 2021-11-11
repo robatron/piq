@@ -1,116 +1,115 @@
-type TestFn = (...args: unknown[]) => unknown;
+type Func = (...args: unknown[]) => unknown;
 type Opts = {
     maxInputDisplayLen?: number;
     spreadInput?: boolean;
-    testNamePrefix?: string;
     testExpectType?: string;
+    testNamePrefix?: string;
 };
-type InOut = [unknown, unknown];
-type DisplayData = number | string | unknown[];
+type Input = number | number[] | string | string[];
+type Output = Input;
+type InAndOut = [Input, Output];
+type DisplayData = number | number[] | string | string[] | unknown[];
 
 const CONTINUE_CHAR = '…';
 const ARROW_CHAR = '→';
 
-/** Create a display string of arbitrary data */
-function createDisplayString(data: DisplayData, maxDispLen = 10): string {
-    if (typeof data === 'string' || typeof data === 'number') {
-        const dataStr: string =
-            typeof data === 'number' ? data.toString() : data;
-        return dataStr.length > maxDispLen
-            ? dataStr.split('').slice(0, maxDispLen).join('') + CONTINUE_CHAR
-            : dataStr;
+const formatInOrOut = (inOrOut: string | number, maxDispLen = 10): string => {
+    let dataStr: string =
+        typeof inOrOut === 'number' ? inOrOut.toString() : inOrOut;
+
+    if (dataStr.length > maxDispLen) {
+        dataStr =
+            dataStr.split('').slice(0, maxDispLen).join('') + CONTINUE_CHAR;
     }
 
-    if (Array.isArray(data)) {
-        let displayArray: unknown[] = data;
+    if (typeof inOrOut === 'string') {
+        dataStr = `'${dataStr}'`;
+    }
+
+    return dataStr;
+};
+
+/** Format an input or output string */
+const formatInsOrOuts = (inOrOut: DisplayData, maxDispLen = 10): string => {
+    if (typeof inOrOut === 'string' || typeof inOrOut === 'number') {
+        return formatInOrOut(inOrOut, maxDispLen);
+    }
+
+    if (Array.isArray(inOrOut)) {
+        let displayArray: string[] = inOrOut.map((io) =>
+            formatInsOrOuts(io, maxDispLen),
+        );
         let itemSuffix = '';
 
-        if (data.length > maxDispLen) {
-            displayArray = data.slice(0, maxDispLen);
-            itemSuffix = `, ${CONTINUE_CHAR}`;
+        if (displayArray.length > maxDispLen) {
+            displayArray = displayArray.slice(0, maxDispLen);
+            itemSuffix = `,${CONTINUE_CHAR}`;
         }
 
         return `[${displayArray.join(',')}${itemSuffix}]`;
     }
-}
+};
 
 /** Create a test name */
-function createTestName(
-    inputs: DisplayData | DisplayData[],
+const createTestName = (
+    inputs: DisplayData,
     output: DisplayData,
     maxDispLen = 10,
-): string {
-    const displayInputs: string | string[] = Array.isArray(inputs)
-        ? inputs.map((input: DisplayData) =>
-              createDisplayString(input, maxDispLen),
-          )
-        : createDisplayString(inputs, maxDispLen);
-    const displayOutput: string = createDisplayString(output, maxDispLen);
+): string => {
+    const displayInputs: string = formatInsOrOuts(inputs, maxDispLen);
+    const displayOutput: string = formatInsOrOuts(output, maxDispLen);
 
     return `${displayInputs} ${ARROW_CHAR} ${displayOutput}`;
-}
+};
 
-/**
- * Create tests for the specified function with the specified array of inputs
- * and expected outputs
- */
-function createTests(
-    ios: InOut[],
-    fn: TestFn,
+/** Create a single test for a function, input(s), and expected output */
+const createTest = (
+    inNOut: InAndOut,
+    fn: Func,
     {
         maxInputDisplayLen = 10,
         spreadInput = false,
         testNamePrefix = '',
         testExpectType = 'toBe',
     }: Opts = {},
-): void {
-    ios.forEach(([input, output]: InOut) => {
-        const prefix: string = testNamePrefix ? testNamePrefix + ' ' : '';
-        let displayInput: string;
+): void => {
+    const [input, output] = inNOut;
+    const prefix: string = testNamePrefix ? testNamePrefix + ' ' : '';
+    const testName: string = createTestName(input, output, maxInputDisplayLen);
 
-        // Contruct display input for arrays
-        if (Array.isArray(input)) {
-            let displayArray: number[] | string[] = input;
-            let itemSuffix = '';
-
-            if (input.length > maxInputDisplayLen) {
-                displayArray = input.slice(0, maxInputDisplayLen + 1);
-                itemSuffix = ', …';
-            }
-
-            displayInput = `[${displayArray.join(',')}${itemSuffix}]`;
-        }
-
-        // Construct display input for strings. Treat number inputs as strings
-        // also for simplicity
-        else if (typeof input === 'string' || typeof input === 'number') {
-            let inputStr =
-                typeof input === 'number'
-                    ? (input as number).toString()
-                    : input;
-            inputStr =
-                inputStr.length > maxInputDisplayLen
-                    ? inputStr.slice(0, maxInputDisplayLen + 1) + '…'
-                    : inputStr;
-            displayInput =
-                typeof input === 'string' ? `'${inputStr}'` : inputStr;
-        }
-
-        // Create the actual test
-        test(`${prefix}${displayInput} => ${output}`, () => {
-            const actual: unknown = spreadInput
-                ? fn(...(input as number[] | string[]))
-                : fn(input);
-            expect(actual)[testExpectType](output);
-        });
+    test(`${prefix}${testName}`, () => {
+        const actual: unknown = spreadInput
+            ? fn(...(input as number[] | string[]))
+            : fn(input);
+        expect(actual)[testExpectType](output);
     });
-}
+};
+
+/** Create tests for a function, inputs, and expected outputs */
+const createTests = (
+    insNOuts: InAndOut[],
+    fn: Func,
+    {
+        maxInputDisplayLen = 10,
+        spreadInput = false,
+        testExpectType = 'toBe',
+        testNamePrefix = '',
+    }: Opts = {},
+): void =>
+    insNOuts.forEach((inAndOut: InAndOut) =>
+        createTest(inAndOut, fn, {
+            maxInputDisplayLen,
+            spreadInput,
+            testExpectType,
+            testNamePrefix,
+        }),
+    );
 
 // eslint-disable-next-line jest/no-export
 export {
     ARROW_CHAR,
     CONTINUE_CHAR,
-    createDisplayString,
+    formatInsOrOuts as createDisplayString,
     createTestName,
     createTests,
 };
