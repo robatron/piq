@@ -67,31 +67,31 @@ const intToRevArrForm = (int: number): number[] => {
 
 /** Add an integer `k` to an array of digits, MSD first */
 const addToArrayForm = (num: number[], k: number): number[] => {
-    const revNum: number[] = [...num].reverse();
-    const revAns: number[] = intToRevArrForm(k);
-    const maxLen: number = Math.max(revAns.length, revNum.length);
+    const ans: number[] = [0];
+    const termArr: number[] = [...num];
 
-    for (let place = 0; place < maxLen; place++) {
-        if (place >= revAns.length) revAns.push(0);
-        if (place >= revNum.length) revNum.push(0);
+    let termNum: number = k;
+    let place = 0;
 
-        const isLastPlace: boolean = place < maxLen - 1;
-        const prevCarry: number = revAns[place];
-        const digit: number = revNum[place];
+    while (termArr.length || termNum > 0) {
+        const prevCarry: number = ans.pop();
+        const nLSD: number = termArr.length ? termArr.pop() : 0;
+        const kLSD: number = termNum > 0 ? termNum % 10 : 0;
 
-        const sum: number = digit + prevCarry;
-        const carry: number = Math.floor(sum / 10);
-        const rmndr: number = sum % 10;
+        const sum: number = nLSD + kLSD + prevCarry;
+        const carry: number = sum > 9 ? 1 : 0;
+        const remainder: number = sum % 10;
 
-        revAns[place] = rmndr;
-        if (isLastPlace || carry) {
-            const nextPlace = place + 1;
-            if (nextPlace < revAns.length) revAns[nextPlace] += carry;
-            else revAns.push(carry);
-        }
+        ans.push(remainder);
+        ans.push(carry);
+
+        place++;
+        termNum = Math.floor(termNum / 10);
     }
 
-    return revAns.reverse();
+    if (!ans[ans.length - 1]) ans.pop();
+
+    return ans.reverse();
 };
 // @lc code=end
 export { addToArrayForm, intToRevArrForm };
