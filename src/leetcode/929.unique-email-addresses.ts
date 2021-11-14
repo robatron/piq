@@ -59,7 +59,7 @@
 // @lc code=start
 /**
  * Return an email address with all '.' and '+' (and everything after) removed
- * from the local name
+ * from the local name.
  */
 const normalizeEmail = (email: string): string => {
     const [localName, domainName] = email.split('@');
@@ -75,12 +75,17 @@ const normalizeEmail = (email: string): string => {
     return `${localNameChars.join('')}@${domainName}`;
 };
 
-/** Return the total number email destinations */
+/** Return the total number of unique email destinations */
 const numUniqueEmails = (emails: string[]): number => {
     const uniqueEmails: Set<string> = new Set();
 
     emails.forEach((email) => {
-        uniqueEmails.add(normalizeEmail(email));
+        const [local, domain]: string[] = email.split('@');
+        const [localNoFilter]: string[] = local.split('+');
+        const localClean: string = localNoFilter.replace(/\./g, '');
+        const emailClean = `${localClean}@${domain}`;
+
+        uniqueEmails.add(emailClean);
     });
 
     return uniqueEmails.size;
