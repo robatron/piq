@@ -5,7 +5,7 @@ type Opts = {
     testExpectType?: string;
     testNamePrefix?: string;
 };
-type Input = number | number[] | string | string[];
+type Input = boolean | number | number[] | string | string[];
 type Output = Input;
 type InAndOut = [Input, Output];
 type DisplayData = number | number[] | string | string[] | unknown[];
