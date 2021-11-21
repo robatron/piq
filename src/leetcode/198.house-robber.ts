@@ -40,37 +40,30 @@
 // @lc code=start
 
 /**
- * Dynamic programming. Track the max hauls of the most recent 4 houses so we
- * can reference the max hauls 3 and 2 houses back.
+ * Dynamic programming. Track the max hauls of the most recent 3 houses so we
+ * can reference the max hauls 1 and 2 houses back.
  *
  * Time:    O(n)    Only traverse the houses once
- * Space:   O(1)    Only track the most recent 4 houses
+ * Space:   O(1)    Only track the most recent 3 houses
  */
 function rob(nums: number[]): number {
-    // We already know the max hauls for 2 or fewer houses
-    if (nums.length === 0) return null;
+    // Trivial cases: No houses => 0 haul, 1 house => house haul, 2 houses =>
+    // largest single house haul
+    if (nums.length === 0) return 0;
     if (nums.length === 1) return nums[0];
     if (nums.length === 2) return Math.max(nums[0], nums[1]);
 
-    // Track the largest possible hauls at the most recent 4 houses in a queue
-    const maxHauls: number[] = [nums[0], nums[1]];
+    let maxHaulBack2 = 0;
+    let maxHaulBack1: number = nums[0];
+    let currentHaul: number;
 
-    // The largest possible haul when arriving at the current house is the
-    // larger haul from 3 or 2 houses back (since 1 house back would trip the
-    // alarm). Shift out the oldest house if we have more than 4 houses.
-    for (let i = 2; i < nums.length; i++) {
-        if (i < 3) maxHauls.push(maxHauls[0] + nums[2]);
-        else {
-            maxHauls.push(Math.max(maxHauls[0], maxHauls[1]) + nums[i]);
-            maxHauls.shift();
-        }
+    for (let i = 1; i < nums.length; i++) {
+        currentHaul = Math.max(maxHaulBack1, maxHaulBack2 + nums[i]);
+        maxHaulBack2 = maxHaulBack1;
+        maxHaulBack1 = currentHaul;
     }
 
-    // Return the larger haul of the final and penultimate houses
-    return Math.max(
-        maxHauls[maxHauls.length - 1],
-        maxHauls[maxHauls.length - 2],
-    );
+    return currentHaul;
 }
 // @lc code=end
 export { rob };

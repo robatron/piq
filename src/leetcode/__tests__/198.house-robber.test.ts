@@ -3,8 +3,8 @@ import { createTests } from './utils';
 
 createTests(
     [
-        [[], null],
-        [[0], 0],
+        [[], 0],
+        [[3], 3],
         [[1, 2], 2],
         [[0, 0, 0], 0],
         [[1, 2, 3, 1], 4],
