@@ -1,4 +1,4 @@
-import { oddEvenJumps, oddEvenJumpsDP } from '../975.odd-even-jump';
+import { oddEvenJumps } from '../975.odd-even-jump';
 import { createTests } from './utils';
 
 const ios: [number[], number][] = [

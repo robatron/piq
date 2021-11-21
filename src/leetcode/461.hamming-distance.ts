@@ -32,7 +32,7 @@
  *
  * Constraints:
  *
- * - 0 <= x, y <= 2^31 - 1
+ * - 0 <= x, y <= 2^31 - 1
  */
 
 // @lc code=start

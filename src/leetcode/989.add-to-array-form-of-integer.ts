@@ -69,9 +69,7 @@ const intToRevArrForm = (int: number): number[] => {
 const addToArrayForm = (num: number[], k: number): number[] => {
     const ans: number[] = [0];
     const termArr: number[] = [...num];
-
     let termNum: number = k;
-    let place = 0;
 
     while (termArr.length || termNum > 0) {
         const prevCarry: number = ans.pop();
@@ -85,7 +83,6 @@ const addToArrayForm = (num: number[], k: number): number[] => {
         ans.push(remainder);
         ans.push(carry);
 
-        place++;
         termNum = Math.floor(termNum / 10);
     }
 

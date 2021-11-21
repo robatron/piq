@@ -89,7 +89,7 @@ class Employee {
     }
 
     // Make this employee take this call
-    takeCall(call: Call) {
+    takeCall(call: Call): void {
         this.activeCall = call;
     }
 }
