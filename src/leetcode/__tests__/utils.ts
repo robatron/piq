@@ -1,6 +1,6 @@
 type Func = (...args: unknown[]) => unknown;
 type Opts = {
-    groupName?: string;
+    name?: string;
     maxInputDisplayLen?: number;
     spreadInput?: boolean;
     testExpectType?: string;
@@ -91,7 +91,7 @@ const createTests = (
     insNOuts: InAndOut[],
     fn: Func,
     {
-        groupName = null,
+        name = null,
         maxInputDisplayLen = 10,
         spreadInput = false,
         testExpectType = 'toBe',
@@ -106,8 +106,8 @@ const createTests = (
             testNamePrefix,
         });
 
-    if (groupName) {
-        describe(groupName, () => {
+    if (name) {
+        describe(name, () => {
             insNOuts.forEach(createTestForEach);
         });
     } else {
