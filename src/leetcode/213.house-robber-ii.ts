@@ -65,17 +65,17 @@ const rob2 = (nums: number[]): number => {
     // house set length, and we can start at either the 0th or the 1st index
     // (corresponding to the 1st or 2nd starting house)
     const validHauls: number[] = [0, 1].map((start) => {
-        const maxHauls: number[] = [nums[start], nums[start + 1]];
+        let maxHaulBack2 = 0;
+        let maxHaulBack1: number = nums[start];
+        let currentHaul: number;
 
-        for (let i = start + 2; i < start + nums.length - 1; i++) {
-            if (i === start + 2) maxHauls.push(nums[start] + nums[start + 2]);
-            else {
-                maxHauls.push(Math.max(maxHauls[0], maxHauls[1]) + nums[i]);
-                maxHauls.shift();
-            }
+        for (let i = start + 1; i < start + nums.length - 1; i++) {
+            currentHaul = Math.max(maxHaulBack1, maxHaulBack2 + nums[i]);
+            maxHaulBack2 = maxHaulBack1;
+            maxHaulBack1 = currentHaul;
         }
 
-        return Math.max(...maxHauls);
+        return currentHaul;
     });
 
     // Simply return the largest valid haul
