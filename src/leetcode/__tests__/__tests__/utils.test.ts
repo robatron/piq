@@ -46,35 +46,34 @@ describe('createDisplayString', () => {
         [
             [123, 456, 789],
             ['abc', 'def', 'ghi'],
-        ].forEach((arr) =>
-            describe(typeof arr[0], () => {
-                const data: number[] | string[] = arr;
-
+        ].forEach((data: (number | string)[]) =>
+            describe(typeof data[0], () => {
                 it('creates a display string', () => {
                     const actual: string = createDisplayString(data, 3);
-                    const expctd = `[${data
-                        .map((d) => (typeof d === 'string' ? `'${d}'` : d))
-                        .toString()}]`;
+                    const expctd = data
+                        .map((d: number | string): string =>
+                            typeof d === 'string' ? `'${d}'` : d.toString(),
+                        )
+                        .toString();
 
-                    expect(actual).toBe(expctd);
+                    expect(actual).toBe(`[${expctd}]`);
                 });
 
                 it("shortens a display string that's too long", () => {
                     const actual: string = createDisplayString(data, 2);
-                    const expctd = `[${data
-                        .map((d, i) => {
+                    const expctd = data
+                        .map((d: number | string, i: number): string => {
                             if (i === data.length - 1) return CONTINUE_CHAR;
                             const dStr: string =
                                 (typeof d === 'number'
                                     ? d.toString()
                                     : d
                                 ).slice(0, 2) + CONTINUE_CHAR;
-
                             return typeof d === 'string' ? `'${dStr}'` : dStr;
                         })
-                        .toString()}]`;
+                        .toString();
 
-                    expect(actual).toBe(expctd);
+                    expect(actual).toBe(`[${expctd}]`);
                 });
             }),
         );

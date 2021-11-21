@@ -1,14 +1,15 @@
 type Func = (...args: unknown[]) => unknown;
 type Opts = {
+    groupName?: string;
     maxInputDisplayLen?: number;
     spreadInput?: boolean;
     testExpectType?: string;
     testNamePrefix?: string;
 };
-type Input = boolean | number | number[] | string | string[];
+type Input = unknown;
 type Output = Input;
 type InAndOut = [Input, Output];
-type DisplayData = number | number[] | string | string[] | unknown[];
+type DisplayData = Input;
 
 const CONTINUE_CHAR = '…';
 const ARROW_CHAR = '→';
@@ -36,7 +37,7 @@ const formatInsOrOuts = (inOrOut: DisplayData, maxDispLen = 10): string => {
     }
 
     if (Array.isArray(inOrOut)) {
-        let displayArray: string[] = inOrOut.map((io) =>
+        let displayArray: string[] = inOrOut.map((io: DisplayData) =>
             formatInsOrOuts(io, maxDispLen),
         );
         let itemSuffix = '';
@@ -90,20 +91,29 @@ const createTests = (
     insNOuts: InAndOut[],
     fn: Func,
     {
+        groupName = null,
         maxInputDisplayLen = 10,
         spreadInput = false,
         testExpectType = 'toBe',
         testNamePrefix = '',
     }: Opts = {},
-): void =>
-    insNOuts.forEach((inAndOut: InAndOut) =>
+): void => {
+    const createTestForEach = (inAndOut: InAndOut) =>
         createTest(inAndOut, fn, {
             maxInputDisplayLen,
             spreadInput,
             testExpectType,
             testNamePrefix,
-        }),
-    );
+        });
+
+    if (groupName) {
+        describe(groupName, () => {
+            insNOuts.forEach(createTestForEach);
+        });
+    } else {
+        insNOuts.forEach(createTestForEach);
+    }
+};
 
 // eslint-disable-next-line jest/no-export
 export {
