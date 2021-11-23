@@ -1,3 +1,4 @@
+type Not<T, TNot> = T extends TNot ? never : T;
 type Func = (...args: unknown[]) => unknown;
 type Opts = {
     name?: string;
@@ -10,13 +11,17 @@ type Input = unknown;
 type Output = Input;
 type InAndOut = [Input, Output];
 type DisplayData = Input;
+type DisplayDatum<T> = Not<T, Array<unknown>>;
 
 const CONTINUE_CHAR = '…';
 const ARROW_CHAR = '→';
 
-const formatInOrOut = (inOrOut: string | number, maxDispLen = 10): string => {
-    let dataStr: string =
-        typeof inOrOut === 'number' ? inOrOut.toString() : inOrOut;
+/** Format a non-array input or output string */
+const formatInOrOut = <T>(
+    inOrOut: DisplayDatum<T>,
+    maxDispLen = 10,
+): string => {
+    let dataStr: string = inOrOut.toString();
 
     if (dataStr.length > maxDispLen) {
         dataStr =
@@ -32,10 +37,6 @@ const formatInOrOut = (inOrOut: string | number, maxDispLen = 10): string => {
 
 /** Format an input or output string */
 const formatInsOrOuts = (inOrOut: DisplayData, maxDispLen = 10): string => {
-    if (typeof inOrOut === 'string' || typeof inOrOut === 'number') {
-        return formatInOrOut(inOrOut, maxDispLen);
-    }
-
     if (Array.isArray(inOrOut)) {
         let displayArray: string[] = inOrOut.map((io: DisplayData) =>
             formatInsOrOuts(io, maxDispLen),
@@ -49,6 +50,8 @@ const formatInsOrOuts = (inOrOut: DisplayData, maxDispLen = 10): string => {
 
         return `[${displayArray.join(',')}${itemSuffix}]`;
     }
+
+    return formatInOrOut(inOrOut, maxDispLen);
 };
 
 /** Create a test name */
@@ -119,7 +122,7 @@ const createTests = (
 export {
     ARROW_CHAR,
     CONTINUE_CHAR,
-    formatInsOrOuts as createDisplayString,
+    formatInsOrOuts,
     createTestName,
     createTests,
 };
