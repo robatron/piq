@@ -7,5 +7,5 @@ const ios: [number[], number][] = [
     [[5, 4, -1, 7, 8], 23],
 ];
 
-createTests(ios, maxSubArrayBrute, { groupName: 'maxSubArrayBrute' });
-createTests(ios, maxSubArrayDP, { groupName: 'maxSubArrayDP' });
+createTests(ios, maxSubArrayBrute, { name: 'maxSubArrayBrute' });
+createTests(ios, maxSubArrayDP, { name: 'maxSubArrayDP' });
