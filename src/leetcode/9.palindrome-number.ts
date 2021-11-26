@@ -1,4 +1,4 @@
-/*
+/**
  * @lc app=leetcode id=9 lang=typescript
  *
  * [9] Palindrome Number

@@ -1,4 +1,4 @@
-/*
+/**
  * @lc app=leetcode id=217 lang=typescript
  *
  * [217] Contains Duplicate
