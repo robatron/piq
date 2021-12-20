@@ -83,21 +83,25 @@ const isValid = (d: string) => VALID_CODES.has(d);
  * - Time: O(n) - Only visit each digit once
  * - Space: O(n) - Hold the number of ways to decode every prefix
  *
- * Best LC submission stats so far:
+ * LC submission stats:
  *
- * - Your runtime beats 98 % of typescript submissions
- * - Your memory usage beats 74 % of typescript submissions (40.6 MB)
- *
- * @todo Do in constant time
+ * - Your runtime beats 88.12 % of typescript submissions
+ * - Your memory usage beats 72.28 % of typescript
  */
 const numDecodings = (s: string): number => {
-    // No way to decode a string starting with an invalid digit! (0)
-    if (!isValid(s[0])) return 0;
+    // Base cases:
+    // - No ways to decode an empty string
+    // - No ways any string starting with an invalid digit! (0)
+    // - Only one way to decode a string of 1 digit
+    if (s.length === 0 || !isValid(s[0])) return 0;
+    if (s.length === 1) return 1;
 
-    // Number of ways to decode `s` thru the specified index. ways[0] means
-    // "ways to decode s[0]", ways[1] means "ways to decode s[0..1]". Set
-    // ways[0] = 1 b/c there's only one way to decode s[0]
-    const ways: number[] = [1];
+    // Number of ways to decode the string thru the current and previous two
+    // digits starting at s[1] b/c we already know the ways to decode the first
+    // digit (s[0]) is 1
+    let waysBack2: number;
+    let waysBack1 = 1;
+    let waysCur: number;
 
     // Consider every digit in the string and determine if it's valid by itself
     // and/or forms a valid 2-digit code with the preceding digit to calculate
@@ -117,18 +121,21 @@ const numDecodings = (s: string): number => {
         // previous digit as the previous prefix, so just carry it forward if
         // this digit is valid by itself. Otherwise, there are no ways to decode
         // this digit by itself.
-        ways.push(isValidSingle ? ways[i - 1] : 0);
+        waysCur = isValidSingle ? waysBack1 : 0;
 
         // There is one more way to decode this prefix than two prefixes ago if
         // both this and the previous digits together form a valid 2-digit code
         // b/c the preceding code came directly before this 2-digit code. If this
         // 2-digit code has no preceding code (b/c it's at the beginning), just
         // add 1 to 0 (b/c there's no way to decode an empty string).
-        if (isValidDouble) ways[i] += i > 1 ? ways[i - 2] : 1;
+        if (isValidDouble) waysCur += i > 1 ? waysBack2 : 1;
+
+        waysBack2 = waysBack1;
+        waysBack1 = waysCur;
     }
 
     // Return the number of ways to decode the full string
-    return ways[s.length - 1];
+    return waysCur;
 };
 // @lc code=end
 export { numDecodings };
