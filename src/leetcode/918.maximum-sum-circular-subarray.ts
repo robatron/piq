@@ -44,25 +44,54 @@
  */
 
 // @lc code=start
-/** Dynamic programming (Kadane's algorithm) in O(n^2) time and O(1) space */
+/**
+ * Dynamic programming (variation on Kadane's algorithm). There are two possible
+ * cases:
+ *
+ * 1. The max subarray sum is in the middle - We can use stock Kadane's
+ *    algorithm for this as we would with a non-circular array
+ * 2. The max subarray sum wraps around from the end to the beginning - We can
+ *    modify Kadane's algorithm to find the min subarray sum and subtract it
+ *    from the total array sum
+ *
+ * Once we've found values for these two cases, we simply take the larger of the
+ * two, ie, max(maxSum, totalSum - minSum)!
+ *
+ * Corner case: If the array contains only negatives, the total array sum and
+ * the min subarray sum will be the same resulting in 0, while the max subarray
+ * sum will be negative. To handle this case, we can simply return the max
+ * subarray sum if we detect the max subarray sum is negative!
+ *
+ * - Time: O(n) b/c we're visiting every item only once
+ * - Space: O(1) b/c not using any additional data structures
+ */
 const maxSubarraySumCircular = (nums: number[]): number => {
-    if (nums.length === 1) return nums[0];
-
+    // Track the total sum, the current min/max subarray sums, and the overall
+    // min/max subarray sums
+    let totalSum: number = nums[0];
+    let curMinSum: number = nums[0];
+    let curMaxSum: number = nums[0];
+    let minSum: number = nums[0];
     let maxSum: number = nums[0];
 
-    for (let startIdx = 0; startIdx < nums.length; startIdx++) {
-        let subArrSum: number = nums[startIdx];
+    // For every new number, determine if it would be better to add it to the
+    // current min/max subarray sums, or take it by itself. Also keep the total
+    // and overall min/max sums updated.
+    for (let i = 1; i < nums.length; i++) {
+        const num: number = nums[i];
 
-        for (let i = 1; i < nums.length; i++) {
-            const iOff: number = (startIdx + i) % nums.length;
-            const num: number = nums[iOff];
-
-            subArrSum = Math.max(subArrSum + num, num);
-            maxSum = Math.max(maxSum, subArrSum);
-        }
+        totalSum += num;
+        curMinSum = Math.min(curMinSum + num, num);
+        curMaxSum = Math.max(curMaxSum + num, num);
+        minSum = Math.min(minSum, curMinSum);
+        maxSum = Math.max(maxSum, curMaxSum);
     }
 
-    return maxSum;
+    // Corner case: If we have all negatives, totalSum will equal the minSum
+    // which gives us 0, which will be larger than maxSum which will be
+    // negative. If maxSum is negative, we know we've encountered this case, so
+    // the max subarray sum is just the maxSum.
+    return maxSum > 0 ? Math.max(maxSum, totalSum - minSum) : maxSum;
 };
 // @lc code=end
 export { maxSubarraySumCircular };
