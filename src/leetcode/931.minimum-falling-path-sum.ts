@@ -41,46 +41,46 @@
  * each cell and return the minimum falling sum of the cells in the bottom row.
  *
  * - Time: O(n^2) - Visit every cell
- * - Space: O(n^2) - Store a value for every space. Note: We could optimize
- *   space by only keeping the previous row of min sums b/c our recurrance
- *   refers to a fixed number of states (prev col, this col, and next col of
- *   previous row).
+ * - Space: O(n) - Store the min sum for cells in the previous and current row
  */
 const minFallingPathSum = (matrix: number[][]): number => {
     const size: number = matrix.length;
+    const isColValid = (col) => col >= 0 && col <= size - 1;
 
     // Only one falling path if the matrix only has one cell
     if (size === 1) return matrix[0][0];
 
-    // Store the min sum to fall to each cell in the matrix. We can initialize
-    // the cells in the topmost row since we already know the min sum to fall to
-    // them is just their values in the matrix.
-    const minSums: number[][] = Array(size)
-        .fill(0)
-        .map((_, rowIdx) => [...matrix[rowIdx]]);
+    // Store the min sum to fall to each cell in the current and previous rows.
+    // We'll start on the topmost row as the previous row and initialize the
+    // cell with the values in the matrix
+    let minSumsPrevRow: number[] = [...matrix[0]];
+    let minSumsCurRow: number[];
 
     // Find the min sum to fall to every cell after the topmost row
     for (let row = 1; row < size; row++) {
+        minSumsCurRow = [];
+
         for (let col = 0; col < size; col++) {
             const val: number = matrix[row][col];
-            const minSumsUp: number[] = minSums[row - 1];
 
             // The possible sums to fall to this cell are the sums of this cell
             // value and the min sums of the cells we can fall from for each. We
-            // can only fall from 3 cells above this one: the cell above,
-            // up-left, and up-right. Create an array of these sums if possible.
+            // can only fall from up to 3 cells above this one: the cell above,
+            // up-left, and up-right.
             const cellSums: number[] = [col - 1, col, col + 1]
-                .map((c) => c >= 0 && c <= size - 1 && val + minSumsUp[c])
-                .filter((sum) => sum);
+                .map((c) => (isColValid(c) ? val + minSumsPrevRow[c] : null))
+                .filter((sum) => sum !== null);
 
             // The min sum to fall to this cell is just the smallest of the
             // possible sums
-            minSums[row][col] = Math.min(...cellSums);
+            minSumsCurRow.push(Math.min(...cellSums));
         }
+
+        minSumsPrevRow = [...minSumsCurRow];
     }
 
     // Return the smallest sum in the final row
-    return Math.min(...minSums[size - 1]);
+    return Math.min(...minSumsCurRow);
 };
 // @lc code=end
 export { minFallingPathSum };
