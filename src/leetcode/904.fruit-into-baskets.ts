@@ -52,10 +52,12 @@
 
 /*
 Log:
+
 - D1 +30 mins
   - Reviewed a couple discussions 20 mins in, realized brain was fried, not
     worth continuing today
-- D2 +30 +30 +30 +25 mins
+
+- D2 +30 +30 +30 +25 = +115 mins
   - Re-read description, go to discussion right away b/c already spent 30 mins
     yesterday, look for hints
   - This hint makes sense, going to try it: "Find the maxium sliding window that
@@ -67,7 +69,8 @@ Log:
     felt "stuck" this time.
   - Running into a failing LeetCode submission test, but brain is burned out.
     Need a break.
-- D3 +30 +20 +30
+
+- D3 +30 +20 +30 = +80 mins
   - Understand there's an issue w/ updating the most-recent first tree, but
     can't figure out how to fix it in time. Looking up solutions.
   - Attempting new approach based on this solution tracking the highest index of
@@ -76,10 +79,17 @@ Log:
   - Break time
   - Got it!
   - Nvm, failing LC submission test :-(
-  - Error: First fruit tree not necessarily the one we need to delete when encountering a new fruit
+  - Error: First fruit tree not necessarily the one we need to delete when
+    encountering a new fruit
   - Brain fried; done for the day
-- D4 +30
-  - Fix, cleanup
+
+- D4 +30 mins
+  - Fix, cleanup, submit
+
+- Results:
+  - 255 mins over 4 days. Medium problems should take me 40 mins, so I need to
+    be 6.4x faster
+  - Want to clean up more, but *must* practice moving with imperfect solutions
 
 Notes:
 
